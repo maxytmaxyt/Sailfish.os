@@ -29,7 +29,7 @@ jobs:
             wget \
             xvfb \
             libgl1-mesa-dev \
-            libegl1-mesa \
+            libgl1-mesa-dri \
             libegl1 \
             libgl1 \
             libgles2 \
@@ -46,7 +46,6 @@ jobs:
             libxcb-randr0 \
             libxcb-composite0 \
             libxcb-cursor0 \
-            libxcb-xinerama0 \
             libxkbcommon0 \
             libxkbcommon-x11-0 \
             libfontconfig1 \
