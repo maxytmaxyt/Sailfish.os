@@ -24,12 +24,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y createrepo-c wget libglib2.0-0 libxcb-icccm4
-
-          - name: Install GUI dependencies
-            run: |
-            sudo apt-get update
-            sudo apt-get install -y \
+          sudo apt-get install -y \
+            createrepo-c \
+            wget \
+            libglib2.0-0 \
             libxcb-icccm4 \
             libxcb-image0 \
             libxcb-keysyms1 \
@@ -39,20 +37,9 @@ jobs:
 
       - name: Download and install Sailfish SDK
         run: |
-          # Download SDK Installer
           wget https://releases.sailfishos.org/sdk/installers/3.13.5/SailfishSDK-3.13.5-linux64-online.run -O installer.run
           chmod +x installer.run
-          
-          # Run headless installation
           ./installer.run --verbose --script-debug --accept-licenses --default-answer --confirm-command
-
-          # Setup SDK PATH & target
-          export PATH="$HOME/SailfishOS/bin:$PATH"
-          # Sync targets if needed via SDK manager
-          if [ -f "$HOME/SailfishOS/bin/sfos-sdk-cbm" ]; then
-            $HOME/SailfishOS/bin/sfos-sdk-cbm target list || true
-          fi
-
       - name: Build RPM Package
         run: |
           # Inject PATH for Sailfish SDK build tools
