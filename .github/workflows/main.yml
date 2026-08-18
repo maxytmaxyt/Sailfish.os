@@ -21,15 +21,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies & X11 libraries
+      - name: Install dependencies & full Qt/X11 stack
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             createrepo-c \
             wget \
             xvfb \
-            libglib2.0-0 \
-            libxcb1 \
+            libgl1-mesa-dev \
+            libegl1-mesa \
+            libegl1 \
+            libgl1 \
+            libgles2 \
+            libglu1-mesa \
             libxcb-icccm4 \
             libxcb-image0 \
             libxcb-keysyms1 \
@@ -38,6 +42,10 @@ jobs:
             libxcb-shape0 \
             libxcb-shm0 \
             libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-randr0 \
+            libxcb-composite0 \
+            libxcb-cursor0 \
             libxcb-xinerama0 \
             libxkbcommon0 \
             libxkbcommon-x11-0 \
