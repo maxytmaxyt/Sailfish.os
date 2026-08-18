@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-networking",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/wlan/advanced",
+            "type": "page",
+            "title": "Advanced",
+            "translation_id": "settings_networking-advanced",
+            "order": 9000,
+            "icon": "image://theme/icon-m-global-proxy",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/advanced-networking/mainpage.qml",
+                "allow_favorite": false
+            }
+        }
+    ]
+}

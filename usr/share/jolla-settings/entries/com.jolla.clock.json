@@ -1,0 +1,23 @@
+{
+    "translation_catalog": "clock",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/topmenu/actions/set_an_alarm",
+            "title": "Set an alarm",
+            "translation_id": "settings_quickaction-la-set_an_alarm",
+            "title_short": "Alarm",
+            "translation_id_short": "settings_quickaction-la-set_an_alarm_short",
+            "type": "action",
+            "icon": "image://theme/icon-m-alarm",
+            "order": 54,
+            "params": {
+                "type": "grid",
+                "requires-package": "jolla-clock",
+                "remote-service": "com.jolla.clock",
+                "remote-path": "/",
+                "remote-interface": "com.jolla.clock",
+                "remote-method": "newAlarm"
+            }
+        }
+    ]
+}

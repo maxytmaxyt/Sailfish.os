@@ -1,0 +1,13 @@
+
+{
+    "translationCatalog"        : "ambience-sailfish3",
+    "displayName"               : "ambience-sailfish3",
+    "wallpaper"                 : "ambience_sailfish3.jpg",
+    "highlightColor"            : "#FF01BCF9",
+    "secondaryHighlightColor"   : "#B001BCF9",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T23:00:00",
+    "version"                   : 2
+}

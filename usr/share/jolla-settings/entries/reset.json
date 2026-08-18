@@ -1,0 +1,18 @@
+{
+    "translation_catalog": "settings-system",
+    "required_group": "sailfish-system",
+    "entries": [
+        {
+            "path": "system_settings/info/reset",
+            "title": "Reset",
+            "translation_id": "settings_system-reset",
+            "type": "page",
+            "icon": "image://theme/icon-m-reset",
+            "order": 400,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/reset/reset.qml",
+                "allow_favorite": false
+            }
+        }
+    ]
+}

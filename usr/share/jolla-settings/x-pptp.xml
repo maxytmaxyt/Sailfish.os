@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-pptp">
+        <comment>PPTP provisioning file</comment>
+        <glob-deleteall/>
+        <glob pattern="*.pbk"/>
+        <magic>
+            <match type="string" value="VpnStrategy=1" offset="0:128"/>
+        </magic>
+    </mime-type>
+</mime-info>

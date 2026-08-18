@@ -1,0 +1,7 @@
+{
+    "icon": "icon-launcher-accounts",
+    "name": "Accounts",
+    "script": "/usr/libexec/jolla-vault/units/vault-accounts",
+    "translation": "vault-ap-accounts"
+}
+

@@ -1,0 +1,6 @@
+{
+    "icon": "icon-launcher-messaging",
+    "name": "Messages",
+    "script": "/usr/libexec/jolla-vault/units/vault-messages",
+    "translation": "vault-ap-messages"
+}

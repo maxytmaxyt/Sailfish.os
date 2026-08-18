@@ -1,0 +1,14 @@
+
+{
+    "translationCatalog"        : "ambience-ruska",
+    "displayName"               : "ambience-ruska",
+    "wallpaper"                 : "ambience_ruska.jpg",
+    "highlightColor"            : "#FFFE9A80",
+    "secondaryHighlightColor"   : "#FFC47662",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : true,
+    "colorScheme"               : "lightondark",
+    "timestamp"                 : "2026-02-23T23:00:00",
+    "version"                   : 3
+}

@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/system/battery",
+            "title": "Battery",
+            "translation_id": "settings_system-battery",
+            "type": "page",
+            "icon": "image://theme/icon-m-battery",
+            "order": 270,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/battery/mainpage.qml"
+            }
+        }
+    ]
+}

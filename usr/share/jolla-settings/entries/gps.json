@@ -1,0 +1,29 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+    {
+        "path": "system_settings/connectivity/gps_and_location",
+        "title": "GPS & location",
+        "translation_id": "settings_system-gps_and_location",
+        "type": "page",
+        "icon": "image://theme/icon-m-location",
+        "order": 500,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/gps_and_location/location.qml",
+            "allow_favorite": false
+        }
+    },
+    {
+        "path": "system_settings/connectivity/gps_and_location/enable_location",
+        "type": "custom",
+        "translation_id": "settings_system-gps_and_location",
+        "icon": "image://theme/icon-m-location",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/gps_and_location/LocationSwitch.qml",
+            "type": "grid",
+            "privileged": "true",
+            "settings_path": "system_settings/connectivity/gps_and_location"
+        }
+    }
+    ]
+}

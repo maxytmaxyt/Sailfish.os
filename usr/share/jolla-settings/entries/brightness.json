@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path":  "system_settings/look_and_feel/display/brightness_slider",
+            "type": "custom",
+            "translation_id": "settings_system-brightness",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/display/BrightnessSettingsSlider.qml",
+                "type": "list",
+                "settings_path": "system_settings/look_and_feel/display"
+            }
+        }
+    ]
+}

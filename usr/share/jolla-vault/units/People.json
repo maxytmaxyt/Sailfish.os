@@ -1,0 +1,6 @@
+{
+    "icon": "icon-launcher-people",
+    "name": "People",
+    "script": "/usr/libexec/jolla-vault/units/vault-contacts",
+    "translation": "vault-ap-people"
+}

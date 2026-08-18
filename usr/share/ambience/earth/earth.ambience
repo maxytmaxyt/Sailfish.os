@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-earth",
+    "displayName"               : "ambience-earth",
+    "wallpaper"                 : "ambience_earth.jpg",
+    "highlightColor"            : "#FF7FD8FE",
+    "secondaryHighlightColor"   : "#FF62A6C4",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : true,
+    "colorScheme"               : "lightondark",
+    "timestamp"                 : "2021-01-25T00:00:00",
+    "version"                   : 3
+}

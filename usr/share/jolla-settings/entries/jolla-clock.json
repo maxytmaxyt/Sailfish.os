@@ -1,0 +1,12 @@
+{
+    "entries": [
+        {
+            "path": "applications/jolla-clock.desktop",
+            "title": "Clock",
+            "type": "application",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/jolla-clock/clock.qml"
+            }
+        }
+    ]
+}

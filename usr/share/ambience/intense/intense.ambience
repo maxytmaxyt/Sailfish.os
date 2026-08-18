@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-intense",
+    "displayName"               : "ambience-intense",
+    "wallpaper"                 : "ambience_intense.jpg",
+    "highlightColor"            : "#ffff9481",
+    "secondaryHighlightColor"   : "#ffd6735e",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T06:00:00",
+    "version"                   : 2
+}

@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/presence",
+            "type": "custom",
+            "order": 900,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/presence/CurrentPresence.qml",
+                "type": "grid",
+                "simpleGrid": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-system",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/connectivity/usb",
+        "title": "USB",
+        "translation_id": "settings_system-usb",
+        "type": "page",
+        "icon": "image://theme/icon-m-usb",
+        "order": 600,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/usb/usb.qml"
+        }
+    }
+    ]
+}

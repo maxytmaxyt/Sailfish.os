@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-l2tp">
+        <comment>L2TP provisioning file</comment>
+        <glob-deleteall/>
+        <glob pattern="*.pbk"/>
+        <glob pattern="*.conf"/>
+        <magic>
+            <match type="string" value="VpnStrategy=3" offset="0:128"/>
+            <match type="string" value="[lac " offset="0:128"/>
+        </magic>
+    </mime-type>
+</mime-info>

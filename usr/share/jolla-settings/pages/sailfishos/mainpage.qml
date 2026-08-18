@@ -1,0 +1,239 @@
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import Sailfish.Policy 1.0
+import Nemo.Configuration 1.0
+import org.nemomobile.systemsettings 1.0
+import com.jolla.settings.sailfishos 1.0
+import com.jolla.settings.system 1.0 as MdmBanner
+import Nemo.Ssu 1.1
+
+Page {
+    id: page
+
+    readonly property bool pageActive: Qt.application.active && page.status === PageStatus.Active
+    property alias storeIf: storeIfItem
+    property var btrfsBalancer: null
+    property bool downloadPending
+    property int contentRightMargin: isPortrait ? Theme.horizontalPageMargin : Theme.paddingSmall
+
+    function qsTrIdStrings() {
+        //: The settings item label shown in settings main page
+        //% "Sailfish OS updates"
+        QT_TRID_NOOP("settings_sailfishos-sailfishos")
+
+        //: Abbreviated form of settings_sailfishos-sailfishos
+        //% "OS updates"
+        QT_TRID_NOOP("settings_sailfishos-sailfishos_short")
+    }
+
+    onPageActiveChanged: if (pageActive) storeIf.calculateDiskSpaceRequirements()
+
+    Component.onCompleted: {
+        if (hasBtrfs) {
+            btrfsBalancer = Qt.createQmlObject(
+                        "import com.jolla.settings.sailfishos 1.0;" +
+                        "BtrfsBalancer { }",
+                        page)
+        }
+    }
+
+    StoreInterface {
+        id: storeIfItem
+
+        // make some shortcuts for cleaner code
+        readonly property bool pending: updateStatus === StoreInterface.Unknown
+                                        || (btrfsBalancer && btrfsBalancer.pending)
+
+        readonly property bool haveUpgrade: updateStatus === StoreInterface.UpdateAvailable
+                                            && updateProgress === 0
+        readonly property bool haveDetails: updateStatus === StoreInterface.UpdateAvailable
+                                            || updateStatus === StoreInterface.PreparingForUpdate
+        readonly property bool downloaded: updateProgress === 100
+        readonly property bool ssuRndModeRequiresRegistration: ssu.deviceMode & Ssu.RndMode && !ssu.registered
+        readonly property bool ssuCbetaRequiresRegistration: ssu.domain === "cbeta" && !ssu.registered
+        readonly property bool ssuDomainRequiresRegistration: ssu.domain !== "sales" && !ssu.registered
+        readonly property bool ssuRequiresRegistration: ssuRndModeRequiresRegistration
+                                                        || ssuDomainRequiresRegistration
+        readonly property bool accountsOk: storeIf.accountStatus === StoreInterface.AccountAvailable
+                                           && !ssuRequiresRegistration
+        readonly property bool diskOk: downloaded ? sufficientSpaceForInstall : sufficientSpaceForDownload
+        readonly property real requiredDisk: downloaded ? osInstallSize : osDownloadSize
+        readonly property real availableDisk: downloaded ? availableSpaceForInstall : availableSpaceForDownload
+
+        readonly property bool mayDownload: AccessPolicy.osUpdatesEnabled
+                                            && haveUpgrade
+                                            && diskOk
+                                            && sufficientBatteryForDownload
+        readonly property bool mayInstall: AccessPolicy.osUpdatesEnabled
+                                           && downloaded
+                                           && diskOk
+                                           && sufficientBatteryForInstall
+
+        readonly property bool balancingRequired: haveUpgrade && btrfsBalancer && btrfsBalancer.required
+
+        onRequiredDiskChanged: {
+            if (downloadPending && sufficientSpaceForDownload) {
+                storeIf.downloadUpdate()
+            }
+            downloadPending = false
+        }
+
+        onBalancingRequiredChanged: {
+            if (btrfsBalancer) {
+                balancingUiLoader.source = Qt.resolvedUrl("BalancingUi.qml")
+            }
+        }
+    }
+
+    Ssu { id: ssu }
+
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: Math.max(content.height, header.height)
+
+        UpgradeHeader {
+            id: header
+
+            charging: storeIf.batteryChargerConnected
+            width: page.isPortrait ? parent.width : parent.width / 2
+            anchors.right: parent.right
+        }
+
+        Column {
+            id: content
+
+            enabled: AccessPolicy.osUpdatesEnabled && !storeIf.accessDenied
+            width: header.width
+
+            Item {
+                width: 1
+                height: page.isPortrait ? header.height : header.pageHeaderHeight
+            }
+
+            MdmBanner.DisabledByMdmBanner {
+                id: mdmBanner
+                active: !AccessPolicy.osUpdatesEnabled
+            }
+
+            PackageProblems {
+                visible: storeIf.updateStatus === StoreInterface.UpdateAvailable
+                         && !placeholder.enabled
+                         && storeIf.offendingPackagesList.length > 0
+            }
+
+            Item { width: 1; height: Theme.paddingLarge }
+
+            Loader {
+                id: balancingUiLoader
+
+                visible: !placeholder.enabled && storeIf.balancingRequired && !storeIf.pending
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.horizontalPageMargin
+                    right: parent.right
+                    rightMargin: page.contentRightMargin
+                }
+            }
+
+            UpgradeDetails {
+                id: upgradeDetails
+
+                rightMargin: page.contentRightMargin
+                visible: !placeholder.enabled && !storeIf.balancingRequired && !storeIf.pending
+            }
+
+            UpgradeSettings {
+                rightMargin: page.contentRightMargin
+                visible: upgradeDetails.visible
+            }
+        }
+
+        UpgradePlaceholder {
+            id: placeholder
+
+            verticalOffset: Math.round(page.height/6 + (mdmBanner.active ? mdmBanner.height/2 : 0))
+            leftMargin: Theme.horizontalPageMargin
+            rightMargin: page.contentRightMargin
+            width: content.width
+            x: 0
+            enabled: !storeIf.accountsOk || storeIf.accessDenied
+        }
+
+        PullDownMenu {
+            busy: storeIf.updateStatus === StoreInterface.Checking
+                  || storeIf.updateStatus === StoreInterface.WaitingForConnection
+            visible: AccessPolicy.osUpdatesEnabled
+                     && !placeholder.enabled
+                     && !storeIf.downloading
+                     && !storeIf.balancingRequired
+
+            MenuItem {
+                visible: storeIf.updateStatus === StoreInterface.UpToDate
+                         || storeIf.haveUpgrade || !storeIf.diskOk
+                //: Check for system update menu item
+                //% "Check for update"
+                text: qsTrId("settings_sailfishos-me-check_system_update")
+                onDelayedClick: {
+                    // Hack: If already downloaded but we do not have valid os installation
+                    // size, refresh update size. Os install size will be invalid
+                    // when trying to download and install so that both partitions are full.
+                    if (storeIf.downloaded && !storeIf.validOsInstallSize) {
+                        storeIf.getUpdateSize()
+                    }
+                    storeIf.checkForUpdate()
+                }
+            }
+
+            MenuItem {
+                visible: storeIf.updateStatus !== StoreInterface.UpToDate
+                enabled: storeIf.mayDownload || storeIf.mayInstall
+                text: {
+                    if (storeIf.haveUpgrade) {
+                        //: Download system update menu item
+                        //% "Download"
+                        qsTrId("settings_sailfishos-me-download_system_update")
+                    } else if (storeIf.downloading) {
+                        //: Downloading system update menu item (disabled)
+                        //% "Downloading"
+                        qsTrId("settings_sailfishos-me-downloading_system_update")
+                    } else if (storeIf.downloaded) {
+                        //: Install system update menu item
+                        //% "Install"
+                        qsTrId("settings_sailfishos-me-install_system_update")
+                    } else if (storeIf.updateStatus === StoreInterface.WaitingForConnection) {
+                        //: Waiting for connection menu item (disabled)
+                        //% "Waiting for connection"
+                        qsTrId("settings_sailfishos-me-waiting_for_connection")
+                    } else if (storeIf.updateStatus === StoreInterface.PreparingForUpdate) {
+                        //: Preparing for update menu item (disabled)
+                        //% "Preparing for update"
+                        qsTrId("settings_sailfishos-me-preparing_for_update")
+                    } else {
+                        //: Checking for updates menu item (disabled)
+                        //% "Checking for updates"
+                        qsTrId("settings_sailfishos-me-checking")
+                    }
+                }
+
+                onClicked: {
+                    if (storeIf.haveUpgrade) {
+                        if (storeIf.requiredDisk === -1) {
+                            // This might happen if the background size check failed for some
+                            // reason (e.g. out of network situation).
+                            downloadPending = true
+                            storeIf.getUpdateSize()
+                        } else {
+                            storeIf.downloadUpdate()
+                        }
+                    } else if (storeIf.mayInstall) {
+                        storeIf.installDownloadedUpdate()
+                    }
+                }
+            }
+        }
+    }
+
+    PageBusyIndicator {
+        running: storeIf.accountsOk && storeIf.pending
+    }
+}

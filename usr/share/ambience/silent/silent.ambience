@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-silent",
+    "displayName"               : "ambience-silent",
+    "wallpaper"                 : "ambience_silent.jpg",
+    "highlightColor"            : "#ff66a8ff",
+    "secondaryHighlightColor"   : "#ff8569db",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "ringerVolume"              : 0,
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T10:00:00",
+    "version"                   : 2
+}

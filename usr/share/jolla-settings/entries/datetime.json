@@ -1,0 +1,18 @@
+{
+    "translation_catalog": "settings-system",
+    "required_group": "sailfish-datetime",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/system/date_time",
+        "title": "Time and date",
+        "translation_id": "settings_system-date_time",
+        "type": "page",
+        "icon": "image://theme/icon-m-clock",
+        "order": 150,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/datetime/datetime.qml"
+         }
+    }
+    ]
+}

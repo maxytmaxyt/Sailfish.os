@@ -1,0 +1,31 @@
+{
+    "translation_catalog": "settings-network",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/mobile",
+            "type": "page",
+            "title": "Mobile network",
+            "translation_id": "settings_networking-mobile",
+            "icon" : "image://theme/icon-m-data-traffic",
+            "order": 200,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/mobile/mainpage.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/mobile/context0",
+            "type": "custom",
+            "title": "Mobile data",
+            "translation_id": "settings_networking-mobile_data",
+            "icon" : "image://theme/icon-m-data-traffic",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/mobile/EnableSwitch.qml",
+                "type": "grid",
+                "system_icon": "image://theme/icon-system-connection-mobile",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/mobile"
+            }
+        }
+    ]
+}

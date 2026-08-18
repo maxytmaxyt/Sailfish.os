@@ -1,0 +1,23 @@
+{
+    "entries": [
+        {
+            "path": "applications",
+            "title": "Apps",
+            "translation_id": "settings-app",
+            "type": "view",
+            "order": 10,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/ApplicationsView.qml"
+            }
+        },
+        {
+            "path": "system_settings",
+            "title": "System",
+            "translation_id": "settings-system",
+            "order": 20,
+            "params": {
+                "depth": 1
+            }
+        }
+    ]
+}

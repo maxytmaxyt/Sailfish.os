@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-networking",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/wlan/enable_global_proxy",
+            "type": "custom",
+            "translation_id": "settings_networking-global_proxy",
+            "icon": "image://theme/icon-m-global-proxy",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/netproxy/NetProxySwitch.qml",
+                "type": "grid",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/wlan/advanced"
+            }
+        }
+    ]
+}

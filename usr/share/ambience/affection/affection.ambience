@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-affection",
+    "displayName"               : "ambience-affection",
+    "wallpaper"                 : "ambience_affection.jpg",
+    "highlightColor"            : "#ffff4c72",
+    "secondaryHighlightColor"   : "#ffdb5893",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T05:00:00",
+    "version"                   : 2
+}

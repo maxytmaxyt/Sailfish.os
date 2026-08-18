@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/gestures",
+            "title": "Gestures",
+            "translation_id": "settings_display-he-gestures",
+            "type": "page",
+            "icon": "image://theme/icon-m-gesture",
+            "order": 280,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/gestures/gestures.qml"
+            }
+        }
+    ]
+}

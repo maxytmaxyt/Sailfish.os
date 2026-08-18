@@ -1,0 +1,20 @@
+[Unit]
+Description=Droid mount for /vendor/dsp
+Before=local-fs.target systemd-modules-load.service
+
+[Mount]
+What=/dev/mmcblk0p44
+Where=/vendor/dsp
+Type=ext4
+Options=nosuid,nodev,barrier=1,data=ordered,nodelalloc,errors=panic
+# Options had SELinux context option:  
+
+# Default is 90 which makes mount period too long in case of
+# errors so drop it down a notch.
+TimeoutSec=10
+
+[Install]
+WantedBy=local-fs.target
+
+# From ./out/target/product/kirin/vendor/etc/fstab.kirin :
+# /dev/mmcblk0p44        /vendor/dsp             ext4    nosuid,nodev,barrier=1,data=ordered,nodelalloc,errors=panic   wait,notrim

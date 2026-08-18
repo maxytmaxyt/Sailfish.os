@@ -1,0 +1,19 @@
+{
+    "translation_catalog": "settings-system",
+    "required_group": "sailfish-system",
+    "entries": [
+        {
+            "path": "system_settings/security/sideloading",
+            "title": "Untrusted software",
+            "translation_id": "settings_system-untrusted_software",
+            "title_short": "Untrusted",
+            "translation_id_short": "settings_system-untrusted_software_short",
+            "type": "page",
+            "icon": "image://theme/icon-m-question",
+            "order": 450,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/sideloading/sideloading.qml"
+            }
+        }
+    ]
+}

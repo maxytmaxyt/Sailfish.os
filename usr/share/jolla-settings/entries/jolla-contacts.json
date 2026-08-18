@@ -1,0 +1,13 @@
+{
+    "entries": [
+        {
+            "path": "applications/jolla-contacts.desktop",
+            "title": "People",
+            "type": "application",
+            "icon": "image://theme/icon-m-people",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/jolla-contacts/contactssettings.qml"
+            }
+        }
+    ]
+}

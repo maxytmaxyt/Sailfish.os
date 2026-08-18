@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-fresh",
+    "displayName"               : "ambience-fresh",
+    "wallpaper"                 : "ambience_fresh.jpg",
+    "highlightColor"            : "#ffbffe7f",
+    "secondaryHighlightColor"   : "#ff88cb66",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T03:00:00",
+    "version"                   : 2
+}

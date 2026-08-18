@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-system",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/security/pin_code",
+        "title": "PIN code",
+        "translation_id": "settings_system-pin_code",
+        "type": "page",
+        "icon": "image://theme/icon-m-pin",
+        "order": 350,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/pin/pin.qml"
+         }
+    }
+    ]
+}

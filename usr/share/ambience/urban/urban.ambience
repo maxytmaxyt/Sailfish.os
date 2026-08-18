@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-urban",
+    "displayName"               : "ambience-urban",
+    "wallpaper"                 : "ambience_urban.jpg",
+    "highlightColor"            : "#ff7fcafe",
+    "secondaryHighlightColor"   : "#ff66a1cb",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T04:00:00",
+    "version"                   : 2
+}

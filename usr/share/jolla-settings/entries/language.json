@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-system",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/system/language_and_region",
+        "title": "Language and region",
+        "translation_id": "settings_system-language_and_region",
+        "type": "page",
+        "icon": "image://theme/icon-m-region",
+        "order": 180,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/language/language.qml"
+         }
+    }
+    ]
+}

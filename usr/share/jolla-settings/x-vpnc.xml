@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-vpnc">
+        <comment>vpnc provisioning file</comment>
+        <glob-deleteall/>
+        <glob pattern="*.conf"/>
+        <magic>
+            <match type="string" value="IPSec gateway " offset="0:128"/>
+        </magic>
+    </mime-type>
+</mime-info>

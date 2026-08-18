@@ -1,0 +1,13 @@
+{
+    "entries": [
+    {
+        "path": "applications/voicecall-ui.desktop",
+        "title": "Phone",
+        "type": "application",
+        "icon": "image://theme/icon-m-phone",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/jolla-voicecall/voicecall.qml"
+        }
+    }
+    ]
+}

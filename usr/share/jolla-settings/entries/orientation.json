@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/display/orientation_lock",
+            "type": "custom",
+            "translation_id": "settings_system-orientation_lock",
+            "icon": "image://theme/icon-m-orientation-lock",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/display/OrientationLock.qml",
+                "type": "grid"
+            }
+        }
+    ]
+}

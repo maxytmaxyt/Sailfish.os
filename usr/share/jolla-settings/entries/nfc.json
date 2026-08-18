@@ -1,0 +1,29 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+    {
+        "path": "system_settings/connectivity/nfc",
+        "title": "NFC",
+        "translation_id": "settings_system-nfc",
+        "type": "page",
+        "icon": "image://theme/icon-m-nfc",
+        "order": 800,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/nfc/nfc.qml",
+            "allow_favorite": false
+        }
+    },
+    {
+        "path": "system_settings/connectivity/nfc/enable_nfc",
+        "type": "custom",
+        "translation_id": "settings_system-nfc",
+        "icon": "image://theme/icon-m-nfc",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/nfc/NfcSwitch.qml",
+            "type": "grid",
+            "privileged": "true",
+            "settings_path": "system_settings/connectivity/nfc"
+        }
+    }
+    ]
+}

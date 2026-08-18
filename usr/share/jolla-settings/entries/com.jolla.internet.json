@@ -1,0 +1,23 @@
+{
+    "translation_catalog": "lipstick-jolla-home",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/topmenu/actions/connect_to_internet",
+            "title": "Connect to internet",
+            "translation_id": "settings_quickaction-la-connect_to_internet",
+            "title_short": "Connect",
+            "translation_id_short": "settings_quickaction-la-connect_to_internet_short",
+            "type": "action",
+            "icon": "image://theme/icon-m-wlan",
+            "order": 51,
+            "params": {
+                "type": "grid",
+                "remote-service": "com.jolla.lipstick.ConnectionSelector",
+                "remote-path": "/",
+                "remote-interface": "com.jolla.lipstick.ConnectionSelectorIf",
+                "remote-method": "openConnectionNow",
+                "remote-arguments": ["wifi"]
+            }
+        }
+    ]
+}

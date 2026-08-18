@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-origami",
+    "displayName"               : "ambience-origami",
+    "wallpaper"                 : "ambience_origami.jpg",
+    "highlightColor"            : "#ff81ffff",
+    "secondaryHighlightColor"   : "#ff6cb7d4",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T09:00:00",
+    "version"                   : 2
+}

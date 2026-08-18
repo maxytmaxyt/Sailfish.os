@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-party",
+    "displayName"               : "ambience-party",
+    "wallpaper"                 : "ambience_party.jpg",
+    "highlightColor"            : "#fffe81d4",
+    "secondaryHighlightColor"   : "#ffcf52b8",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T11:00:00",
+    "version"                   : 2
+}

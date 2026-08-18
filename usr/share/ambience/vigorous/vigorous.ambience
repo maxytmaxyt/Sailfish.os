@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-vigorous",
+    "displayName"               : "ambience-vigorous",
+    "wallpaper"                 : "ambience_vigorous.jpg",
+    "highlightColor"            : "#fffeaf6d",
+    "secondaryHighlightColor"   : "#ffd4855a",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T01:00:00",
+    "version"                   : 2
+}

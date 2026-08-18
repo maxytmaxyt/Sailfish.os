@@ -1,0 +1,14 @@
+
+{
+    "translationCatalog"        : "ambience-flare",
+    "displayName"               : "ambience-flare",
+    "wallpaper"                 : "ambience_flare.jpg",
+    "highlightColor"            : "#FFFE9A80",
+    "secondaryHighlightColor"   : "#FFC47662",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : true,
+    "colorScheme"               : "lightondark",
+    "timestamp"                 : "2024-01-01T23:00:00",
+    "version"                   : 3
+}

@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-accounts",
+    "entries": [
+        {
+            "path": "accounts",
+            "title": "Accounts",
+            "translation_id": "settings_accounts-he-page_accounts",
+            "type": "view",
+            "order": 30,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/accounts/mainview.qml"
+            }
+        }
+    ]
+}

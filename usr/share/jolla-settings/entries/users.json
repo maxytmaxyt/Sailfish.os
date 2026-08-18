@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+    {
+        "path": "system_settings/system/users",
+        "title": "Users",
+        "translation_id": "settings_system-users",
+        "type": "page",
+        "icon": "image://theme/icon-m-users",
+        "order": 70,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/users/users.qml"
+         }
+    }
+    ]
+}

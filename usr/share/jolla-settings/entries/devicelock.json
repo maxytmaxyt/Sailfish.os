@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-system",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/security/device_lock",
+        "title": "Device Lock",
+        "translation_id": "settings_system-device_lock",
+        "type": "page",
+        "icon": "image://theme/icon-m-device-lock",
+        "order": 300,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/devicelock/devicelock.qml"
+         }
+    }
+    ]
+}

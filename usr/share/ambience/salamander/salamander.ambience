@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-salamander",
+    "displayName"               : "ambience-salamander",
+    "wallpaper"                 : "ambience_salamander.jpg",
+    "highlightColor"            : "#FFFF8380",
+    "secondaryHighlightColor"   : "#B0FF8380",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T07:00:00",
+    "version"                   : 2
+}

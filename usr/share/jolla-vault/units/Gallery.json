@@ -1,0 +1,8 @@
+{
+    "group": "media",
+    "icon": "icon-launcher-gallery",
+    "is_unit_config": true,
+    "name": "Gallery",
+    "script": "/usr/libexec/jolla-vault/units/vault-gallery",
+    "translation": "vault-ap-gallery"
+}

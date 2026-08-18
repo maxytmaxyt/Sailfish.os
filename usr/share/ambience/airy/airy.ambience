@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-airy",
+    "displayName"               : "ambience-airy",
+    "wallpaper"                 : "ambience_airy.jpg",
+    "highlightColor"            : "#FF004C99",
+    "secondaryHighlightColor"   : "#FF003D76",
+    "primaryColor"              : "#FF000000",
+    "secondaryColor"            : "#FF454545",
+    "favorite"                  : false,
+    "colorScheme"               : "darkonlight",
+    "timestamp"                 : "2018-10-24T15:00:00",
+    "version"                   : 3
+}

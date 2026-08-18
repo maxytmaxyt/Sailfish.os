@@ -1,0 +1,12 @@
+{
+    "translation_catalog": "settings-network",
+    "entries": [
+        {
+            "path": "system_settings/connectivity",
+            "type": "section",
+            "title": "Connectivity",
+            "order": 200,
+            "translation_id": "settings_networking-connectivity"
+        }
+    ]
+}

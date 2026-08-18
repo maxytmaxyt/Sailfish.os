@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-water",
+    "displayName"               : "ambience-water",
+    "wallpaper"                 : "ambience_water.jpg",
+    "highlightColor"            : "#FF7FF0FE",
+    "secondaryHighlightColor"   : "#FF62B9C4",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : true,
+    "colorScheme"               : "lightondark",
+    "timestamp"                 : "2021-01-25T00:00:03",
+    "version"                   : 3
+}

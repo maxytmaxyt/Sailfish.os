@@ -1,0 +1,242 @@
+﻿/****************************************************************************
+**
+** Copyright (c) 2013 - 2020 Jolla Ltd.
+** Copyright (c) 2020 Open Mobile Platform LLC.
+**
+****************************************************************************/
+
+import QtQuick 2.6
+import QtFeedback 5.0
+import Sailfish.Silica 1.0
+import Sailfish.Lipstick 1.0
+import org.nemomobile.lipstick 0.1
+import Nemo.DBus 2.0
+import Nemo.Notifications 1.0 as Nemo
+import Nemo.Configuration 1.0
+import com.jolla.lipstick 0.1
+
+import "main"
+import "switcher"
+
+ApplicationWindow {
+    id: window
+
+    cover: undefined
+    defaultPageCutoutMode: CutoutMode.FullScreen
+
+    function desktopInstance() {
+        return Desktop.instance
+    }
+
+    allowedOrientations: {
+        var allowedOrientations = (Screen.sizeCategory > Screen.Medium || homescreenOrientationConfig.value)
+                ? defaultAllowedOrientations
+                : defaultAllowedOrientations & Orientation.PortraitMask
+
+        if (Lipstick.compositor.alarmLayer.window
+                    && (Lipstick.compositor.alarmLayer.window.orientation & allowedOrientations)) {
+            return Lipstick.compositor.alarmLayer.window.orientation
+        } else if (Lipstick.compositor.appLayer.window
+                    && (Lipstick.compositor.appLayer.window.orientation & allowedOrientations)) {
+            return Lipstick.compositor.appLayer.window.orientation
+        } else {
+            return _selectOrientation(allowedOrientations, Lipstick.compositor.screenOrientation)
+        }
+    }
+
+    Binding {
+        target: Lipstick.compositor
+        property: "homeOrientation"
+        value: allowedOrientations
+    }
+
+    Binding {
+        when: window._dimScreen
+        target: Lipstick.compositor.wallpaper.dimmer
+        property: "dimmed"
+        value: true
+    }
+
+    ConfigurationValue {
+        id: homescreenOrientationConfig
+
+        key: "/desktop/lipstick-jolla-home/allow_homescreen_rotation"
+        defaultValue: false
+    }
+
+    initialPage: Component { Page {
+        id: desktop
+
+        allowedOrientations: Orientation.All
+
+        property alias switcher: switcher
+        readonly property bool active: Lipstick.compositor.switcherLayer.active && Lipstick.compositor.systemInitComplete
+
+        onActiveChanged: {
+            if (!active) {
+                hintTimer.stop()
+                Lipstick.compositor.launcherHinting = false
+                Lipstick.compositor.topMenuHinting = false
+            } else if (switcher.count == 0
+                        && Lipstick.compositor.previousWindow == Lipstick.compositor.lockScreenLayer.window) {
+                hintTimer.start()
+
+                if (Desktop.windowPromptPending) {
+                    windowPrompt.call("showPendingPrompts", [])
+                }
+            }
+        }
+
+        onVisibleChanged: {
+            if (visible) {
+                CoverControl.status = Cover.Activating
+                CoverControl.status = Cover.Active
+            } else {
+                CoverControl.status = Cover.Deactivating
+                CoverControl.status = Cover.Inactive
+            }
+        }
+
+        Component.onCompleted: {
+            Desktop.instance = desktop
+
+            if (Lipstick.compositor.sessionActive
+                    && Lipstick.compositor.systemInitComplete) {
+                bluetoothObexSystemAgent.startObexService()
+            }
+        }
+
+        orientationTransitions: OrientationTransition {
+            page: desktop
+            applicationWindow: window
+        }
+
+        function setForceTopWindowProcessId(pid) {
+            lockscreen.forceTopWindowProcessId = pid
+        }
+
+        Timer {
+            id: hintTimer
+
+            interval: 1000
+            onTriggered: {
+                if (!Lipstick.compositor.topMenuHinting && Lipstick.compositor.multitaskingHome) {
+                    Lipstick.compositor.launcherLayer.showHint()
+                }
+            }
+        }
+
+        Switcher {
+            id: switcher
+            anchors.fill: parent
+        }
+
+        Binding {
+            when: Lipstick.compositor.multitaskingHome
+            target: Lipstick.compositor.switcherLayer
+            property: "contentY"
+            value: switcher.contentY
+        }
+
+        Binding {
+            target: Lipstick.compositor.switcherLayer
+            property: "menuOpen"
+            value: switcher.menuOpen
+        }
+
+        BluetoothSystemAgent {
+            id: bluetoothSystemAgent
+        }
+
+        BluetoothObexSystemAgent {
+            id: bluetoothObexSystemAgent
+        }
+
+        Connections {
+            target: Lipstick.compositor
+
+            onSessionActiveChanged: {
+                if (Lipstick.compositor.sessionActive
+                        && Lipstick.compositor.systemInitComplete) {
+                    bluetoothObexSystemAgent.startObexService()
+                }
+            }
+
+            onSystemInitCompleteChanged: {
+                if (Lipstick.compositor.sessionActive
+                        && Lipstick.compositor.systemInitComplete) {
+                    bluetoothObexSystemAgent.startObexService()
+                }
+            }
+        }
+
+        DBusAdaptor {
+            service: "com.jolla.lipstick"
+            path: "/bluetooth"
+            iface: "com.jolla.lipstick"
+
+            signal pairWithDevice(string address)
+            signal cancelPairWithDevice(string address)
+            signal replyToAgentRequest(int requestId, int error, string passkey)
+
+            signal replyToObexAgentRequest(string transferPath, bool acceptFile)
+            signal cancelTransfer(string transferPath)
+
+            onPairWithDevice: bluetoothSystemAgent.pairWithDevice(address)
+            onCancelPairWithDevice: bluetoothSystemAgent.cancelPairWithDevice(address)
+            onReplyToAgentRequest: bluetoothSystemAgent.replyToAgentRequest(requestId, error, passkey)
+
+            onReplyToObexAgentRequest: bluetoothObexSystemAgent.replyToObexAgentRequest(transferPath, acceptFile)
+            onCancelTransfer: bluetoothObexSystemAgent.cancelTransfer(transferPath)
+        }
+
+        Loader {
+            active: Desktop.deviceInfo.hasCellularVoiceCallFeature
+            sourceComponent: Component {
+                VoicecallAgent {
+                    property QtObject voicecall: DBusInterface {
+                        service: "com.jolla.voicecall.ui"
+                        path: "/"
+                        iface: "com.jolla.voicecall.ui"
+
+                        function dial(number) {
+                            call('dial', number)
+                        }
+                    }
+
+                    onDialNumber: voicecall.dial(number)
+                }
+            }
+        }
+
+        ShutterKeyHandler {
+            // for now playing it safe and allowing only if device is properly unlocked
+            enabled: !lipstickSettings.lockscreenVisible
+            onPressAndHold: {
+                vibraEffect.play()
+                cameraInterface.call("showViewfinder", "")
+            }
+        }
+
+        ThemeEffect {
+            id: vibraEffect
+            effect: ThemeEffect.PressWeak
+        }
+
+        DBusInterface {
+            id: cameraInterface
+
+            iface: "com.jolla.camera.ui"
+            service: "com.jolla.camera"
+            path: "/"
+        }
+
+        DBusInterface {
+            id: windowPrompt
+
+            service: "com.jolla.windowprompt"
+            path: "/com/jolla/windowprompt"
+            iface: "com.jolla.windowprompt"
+        }
+    } }
+}

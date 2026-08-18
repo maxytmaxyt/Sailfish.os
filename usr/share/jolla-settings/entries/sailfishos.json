@@ -1,0 +1,20 @@
+{
+    "translation_catalog": "settings-sailfishos",
+    "complementary_translation_catalog": "settings-sailfishos-complementary",
+    "required_group": "sailfish-system",
+    "entries": [
+        {
+            "path": "system_settings/system/sailfishos",
+            "title": "Sailfish OS updates",
+            "translation_id": "settings_sailfishos-sailfishos",
+            "title_short": "OS updates",
+            "translation_id_short": "settings_sailfishos-sailfishos_short",
+            "type": "page",
+            "icon": "image://theme/icon-m-sailfish",
+            "order": 50,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/sailfishos/mainpage.qml"
+            }
+        }
+    ]
+}

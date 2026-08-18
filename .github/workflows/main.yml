@@ -1,0 +1,31 @@
+name: Build RPM and Update OTA Repo
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build RPM inside Sailfish SDK Container
+        run: |
+          # Run build commands using Sailfish SDK container
+          docker run --rm -v $(pwd):/workspace -w /workspace coderus/sailfishos-sdk:latest /bin/bash -c "mb2 build"
+
+      - name: Prepare Repo Directory
+        run: |
+          # Set up public folder for GitHub Pages
+          mkdir -p public
+          cp RPMS/*.rpm public/
+          sudo apt-get update && sudo apt-get install -y createrepo-c
+          createrepo_c public/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-rolling",
+    "displayName"               : "ambience-rolling",
+    "wallpaper"                 : "ambience_rolling.jpg",
+    "highlightColor"            : "#FF93B2FE",
+    "secondaryHighlightColor"   : "#B093B2FE",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "colorScheme"               : "lightondark",
+    "timestamp"                 : "2018-10-24T14:00:00",
+    "version"                   : 3
+}

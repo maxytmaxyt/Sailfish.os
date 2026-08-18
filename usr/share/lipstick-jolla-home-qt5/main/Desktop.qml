@@ -1,0 +1,153 @@
+/****************************************************************************
+**
+** Copyright (c) 2013 - 2019 Jolla Ltd.
+** Copyright (c) 2019 Open Mobile Platform LLC.
+**
+** License: Proprietary
+**
+****************************************************************************/
+
+pragma Singleton
+import QtQml 2.0
+import Sailfish.Silica 1.0
+import Sailfish.Silica.Background 1.0
+import Sailfish.Telephony 1.0
+import Nemo.DBus 2.0
+import Nemo.FileManager 1.0
+import Nemo.Configuration 1.0
+import org.nemomobile.devicelock 1.0
+import org.nemomobile.systemsettings 1.0
+import com.jolla.lipstick 0.1
+
+QtObject {
+    property Page instance
+
+    // SUW loads on boot; we're monitoring simply if the process is running or not.
+    property bool startupWizardRunning: startupWizardWatcher.running
+
+    // Expose device lock state that is exposed to system bus. Mce listens this same
+    // and tk_lock is also in system bus. In order to sync tk_lock
+    // and device lock state between mce, device lock daemon,
+    // and lipstick all information must come through dbus daemon (see JB#39577).
+    property int deviceLockState: DeviceLock.Undefined
+
+    property bool eventsViewVisible
+
+    property var simManager: SimManager {
+        controlType: SimManagerType.Voice
+    }
+
+    // DSSS: Single active card
+    // DSDS: Dual-standby
+    // DADA: Dual-active
+    // The SIM the user has chosen to use. Only needed by DSSS, or phase 2 implementation
+    readonly property int activeSim: simManager.activeSim + 1
+    // Do we want to show two separate indicators, i.e. we have DSDS or DSDA
+    readonly property bool showDualSim: Telephony.multiSimSupported
+                                        && simManager.ready
+                                        && simManager.enabledModems.length > 1
+
+    // Voice sim can toggled when more than one sim cards are inserted or as exception one sim card
+    // inserted but it's not the active one.
+    readonly property bool showMultiSimSelector: Telephony.multiSimSupported && simManager.ready
+                                                 && ((Telephony.voiceSimUsageMode === Telephony.ActiveSim
+                                                      && simManager.simCount > 1)
+                                                     || (simManager.simCount === 1 && simManager.activeSim === -1))
+
+    property QtObject settings: ConfigurationGroup {
+        path: "/desktop/lipstick-jolla-home"
+
+        property bool left_peek_to_events: false
+        property int dialog_orientation
+        property bool lock_screen_camera: true
+        property int security_code_notification_id
+        property int blur_iterations: 2
+        property int blur_kernel: Kernel.SampleSize17
+        property real blur_deviation: 5
+        property bool live_snapshots
+        property bool lock_screen_events: false
+        property bool lock_screen_events_allowed: true
+        property bool xdg_window_rotation
+        property real xdg_window_scale: 1
+    }
+
+    property var startupWizardWatcher: DBusInterface {
+        service: "org.freedesktop.DBus"
+        path: "/org/freedesktop/DBus"
+        iface: "org.freedesktop.DBus"
+
+        // Only listen to DBus chatter when necessary.
+        signalsEnabled: running || !tutorialReached.value
+
+        property bool running
+
+        function nameOwnerChanged(serviceName, oldOwner, newOwner) {
+            if (serviceName == "ui.jolla.startupwizard") {
+                running = (newOwner != "")
+            }
+        }
+    }
+
+    function cellularContext(sim) {
+        return sim === 2 ? "Cellular_1" : "Cellular"
+    }
+
+    property QtObject tutorialReached: ConfigurationValue {
+        key: "/apps/jolla-startupwizard/reached_tutorial"
+        defaultValue: false
+    }
+
+    property QtObject deviceLock: DBusInterface {
+        function getDeviceLockState() {
+            if (status === DBusInterface.Available) {
+                call("state", [], function(state) {
+                    deviceLockState = state
+                })
+            } else {
+                deviceLockState = DeviceLock.Undefined
+            }
+        }
+
+        function stateChanged(state) {
+            deviceLockState = state
+        }
+
+        watchServiceStatus: true
+        bus: DBus.SystemBus
+        service: 'org.nemomobile.devicelock'
+        path: '/devicelock'
+        iface: 'org.nemomobile.lipstick.devicelock'
+        signalsEnabled: true
+
+        onStatusChanged: getDeviceLockState()
+        Component.onCompleted: getDeviceLockState()
+    }
+
+    property QtObject deviceInfo: DeviceInfo {
+        readonly property bool hasCellularVoiceCallFeature: hasFeature(DeviceInfo.FeatureCellularVoice)
+    }
+
+    property QtObject pendingWindowPrompt: ConfigurationValue {
+        key: "/desktop/lipstick-jolla-home/windowprompt/pending"
+        defaultValue: []
+    }
+
+    property bool windowPromptPending: pendingWindowPrompt.value.length > 0
+
+    property bool weatherAvailable
+    // some file of the app that ensures it's installed
+    readonly property string weatherAppFile: StandardPaths.qmlImportPath + "org/sailfishos/weather/settings/qmldir"
+    function refreshWeatherAvailable() {
+        weatherAvailable = fileUtils.exists(weatherAppFile)
+    }
+
+    property FileUtils fileUtils: FileUtils { }
+
+    property TimedStatus timedStatus: TimedStatus {}
+
+    signal showVolumeBar()
+
+    Component.onCompleted: {
+        refreshWeatherAvailable()
+    }
+}

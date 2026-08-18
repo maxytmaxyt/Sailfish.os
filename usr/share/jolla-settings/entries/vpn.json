@@ -1,0 +1,29 @@
+{
+    "translation_catalog": "settings-networking",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/vpn",
+            "type": "page",
+            "title": "VPN",
+            "translation_id": "settings_networking-vpn",
+            "order": 350,
+            "icon": "image://theme/icon-m-vpn",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/vpn/mainpage.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/vpn/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_networking-vpn",
+            "icon": "image://theme/icon-m-vpn",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/vpn/EnableSwitch.qml",
+                "type": "grid",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/vpn"
+            }
+        }
+    ]
+}

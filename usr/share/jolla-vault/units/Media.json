@@ -1,0 +1,8 @@
+{
+    "group": "media",
+    "icon": "icon-launcher-mediaplayer",
+    "is_unit_config": true,
+    "name": "Media",
+    "script": "/usr/libexec/jolla-mediaplayer/vault-mediaplayer",
+    "translation": "vault-ap-playlists"
+}

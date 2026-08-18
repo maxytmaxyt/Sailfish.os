@@ -1,0 +1,19 @@
+{
+    "translation_catalog": "settings-system",
+    "required_group": "sailfish-system",
+    "entries": [
+        {
+            "path": "system_settings/system/developer_mode",
+            "title": "Developer mode",
+            "translation_id": "settings_system-developer_mode",
+            "title_short": "Developer",
+            "translation_id_short": "settings_system-developer_mode_short",
+            "type": "page",
+            "icon": "image://theme/icon-m-developer-mode",
+            "order": 500,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/developermode/developermode.qml"
+            }
+        }
+    ]
+}

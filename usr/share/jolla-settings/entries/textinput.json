@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "jolla-keyboard",
+    "entries": [
+    {
+        "path": "system_settings/system/text_input",
+        "title": "Text input",
+        "translation_id": "settings_text_input-text_input",
+        "type": "page",
+        "icon": "image://theme/icon-m-keyboard",
+        "order": 250,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/text_input/textinput.qml"
+        }
+    }
+    ]
+}

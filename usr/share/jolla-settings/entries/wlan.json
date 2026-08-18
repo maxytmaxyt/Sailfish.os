@@ -1,0 +1,30 @@
+{
+    "translation_catalog": "settings-network",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/wlan",
+            "type": "page",
+            "title": "WLAN",
+            "translation_id": "settings_networking-wlan",
+            "order": 100,
+            "icon": "image://theme/icon-m-wlan",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/wlan/mainpage.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/wlan/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_networking-wlan",
+            "icon": "image://theme/icon-m-wlan",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/wlan/WlanSwitch.qml",
+                "type": "grid",
+                "system_icon": "image://theme/icon-system-connection-wlan",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/wlan"
+            }
+        }
+    ]
+}

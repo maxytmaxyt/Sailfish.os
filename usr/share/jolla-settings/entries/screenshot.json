@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "lipstick-jolla-home",
+        "entries": [
+        {
+            "path": "system_settings/look_and_feel/topmenu/screenshot/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_system-screenshot-button",
+            "icon": "image://theme/icon-m-browser-camera",
+            "params": {
+                "source": "/usr/share/lipstick-jolla-home-qt5/volumecontrol/ScreenshotToggle.qml",
+                "type": "grid"
+            }
+        }
+    ]
+}

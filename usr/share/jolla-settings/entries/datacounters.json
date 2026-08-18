@@ -1,0 +1,18 @@
+{
+    "translation_catalog": "settings-network",
+    "entries": [
+        {
+            "path": "system_settings/info/datacounters",
+            "type": "page",
+            "title": "Data counters",
+            "translation_id": "settings_networking-data_counters",
+            "title_short": "Counters",
+            "translation_id_short": "settings_networking-data_counters_short",
+            "icon": "image://theme/icon-m-cloud-download",
+            "order": 300,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/datacounters/mainpage.qml"
+            }
+        }
+    ]
+}

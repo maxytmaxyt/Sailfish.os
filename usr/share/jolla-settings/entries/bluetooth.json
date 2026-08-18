@@ -1,0 +1,30 @@
+{
+    "translation_catalog": "settings-bluetooth",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/bluetooth",
+            "type": "page",
+            "title": "Bluetooth",
+            "translation_id": "settings_bluetooth-bluetooth",
+            "icon": "image://theme/icon-m-bluetooth",
+            "order": 700,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/bluetooth/bluetoothSettings.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/bluetooth/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_bluetooth-bluetooth",
+            "icon": "image://theme/icon-m-bluetooth",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/bluetooth/EnableSwitch.qml",
+                "type": "grid",
+                "system_icon": "image://theme/icon-system-bluetooth-device",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/bluetooth"
+            }
+        }
+    ]
+}

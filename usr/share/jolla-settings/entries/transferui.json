@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "sailfish_transferengine",
+    "entries": [
+        {
+            "path": "system_settings/info/transferui",
+            "title": "Transfers",
+            "translation_id": "settings_transferui-transferui",
+            "type": "page",
+            "icon": "image://theme/icon-m-transfer",
+            "order": 250,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/transferui/mainpage.qml"
+            }
+        }
+    ]
+}

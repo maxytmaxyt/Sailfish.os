@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/display/fontsize/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_system-font_size",
+            "icon": "image://theme/icon-m-font-size",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/display/FontSizeSwitch.qml",
+                "type": "grid"
+            }
+        }
+    ]
+}

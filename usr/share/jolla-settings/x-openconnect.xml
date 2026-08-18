@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-openconnect">
+        <comment>openconnect provisioning file</comment>
+        <glob-deleteall/>
+        <glob pattern="*.xml"/>
+	<magic>
+            <match type="string" value="&lt;?xml " offset="0">
+                <match type="string" value="&lt;AnyConnectProfile " offset="0:128"/>
+            </match>
+	</magic>
+	<root-XML namespaceURI="http://schemas.xmlsoap.org/encoding" localName="AnyConnectProfile" />
+    </mime-type>
+</mime-info>

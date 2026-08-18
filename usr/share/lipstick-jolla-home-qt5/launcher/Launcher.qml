@@ -1,0 +1,359 @@
+/*
+ * Copyright (c) 2013 - 2018 Jolla Ltd.
+ * Copyright (c) 2019 - 2021 Open Mobile Platform LLC.
+ *
+ * License: Proprietary
+ */
+
+import QtQuick 2.6
+import org.nemomobile.lipstick 0.1
+import Sailfish.Silica 1.0
+import Sailfish.Silica.private 1.0 as SilicaPrivate
+import Sailfish.Policy 1.0
+import Sailfish.AccessControl 1.0
+import Nemo.Configuration 1.0
+import Sailfish.Lipstick 1.0
+import Nemo.DBus 2.0
+import com.jolla.lipstick 0.1
+
+SilicaListView {
+    id: launcherPager
+
+    onVisibleChanged: if (!visible) { resetPosition(400) }
+
+    property bool editMode: launcher.launcherEditMode
+    property alias openedChildFolder: launcher.openedChildFolder
+
+    onEditModeChanged: {
+        if (editMode) {
+            snapMode = ListView.NoSnap
+            highlightRangeMode = ListView.NoHighlightRange
+        } else {
+            restoreSnapModeContentAnimation.to = originY + Math.round((contentY - originY) / height) * height
+            restoreSnapMode.start()
+        }
+    }
+
+    model: ListModel {}
+    delegate: Item {
+        width: launcherPager.width
+        height: launcherPager.height
+    }
+    snapMode: ListView.SnapOneItem
+    highlightRangeMode: ListView.StrictlyEnforceRange
+    cacheBuffer: height * model.count
+
+    // Match velocity with EdgeLayer gesture transition's 200ms (0.2s below) duration
+    maximumFlickVelocity: Math.max(Theme.maximumFlickVelocity, height / 0.2)
+    highlightMoveDuration: 300
+    pressDelay: 0
+    quickScroll: false
+    interactive: {
+        var interactive = !launcher.openedChildFolder && !Lipstick.compositor.launcherLayer.hinting
+        if (Lipstick.compositor.multitaskingHome) {
+            return interactive && !Lipstick.compositor.launcherLayer.pinned
+        } else {
+            return interactive
+        }
+    }
+
+    function resetPosition(delay) {
+        resetPositionTimer.interval = delay === undefined ? 1 : delay
+        resetPositionTimer.restart()
+    }
+
+    Timer {
+        id: resetPositionTimer
+
+        onTriggered: {
+            if (!launcherPager.visible) {
+                launcherPager.positionViewAtBeginning()
+            }
+        }
+    }
+
+    function scroll(up) {
+        contentYAnimation.to = up ? 0 : contentHeight - launcherPager.height
+        contentYAnimation.duration = Math.abs(contentY - contentYAnimation.to)
+        contentYAnimation.start()
+    }
+
+    function stopScrolling() {
+        contentYAnimation.stop()
+    }
+
+    function findClosestDelegate(x, y) {
+        // Adjust here for center to do less calculations later
+        x = x - launcher.cellWidth / 2
+        y = y - launcher.cellHeight / 2
+        var closest = null
+        // Square of Euclidean distance
+        var distance = Infinity
+        var delegates = launcher.contentItem.children
+        for (var i = 0; i < delegates.length; i++) {
+            var delegate = delegates[i]
+            if (!delegate.contentItem || delegate.contentItem.objectName !== "EditableGridDelegate_contentItem") {
+                // In addition to EditableGridDelegates there are other items that we don't want
+                continue
+            }
+            var d = Math.pow(x - delegate.x, 2) + Math.pow(y - delegate.y, 2)
+            if (d < distance) {
+                closest = delegate
+                distance = d
+            }
+        }
+        return closest
+    }
+
+    NumberAnimation {
+        id: contentYAnimation
+
+        target: launcherPager
+        property: "contentY"
+    }
+
+    SequentialAnimation {
+        id: restoreSnapMode
+
+        NumberAnimation {
+            id: restoreSnapModeContentAnimation
+
+            target: launcherPager
+            property: "contentY"
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        ScriptAction {
+            script: {
+                launcherPager.currentIndex = Math.round((contentY - originY) / height)
+                launcherPager.snapMode = ListView.SnapOneItem
+                launcherPager.highlightRangeMode = ListView.StrictlyEnforceRange
+            }
+        }
+    }
+
+    Icon {
+        id: handle
+
+        property bool doubleHandle: Screen.topCutout.height > 0
+
+        parent: launcherPager.contentItem
+        y: launcherPager.originY
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: doubleHandle
+                                        ? (Screen.topCutout.width / 2 + Theme.paddingLarge + width / 2) : 0
+        source: "image://theme/graphic-edge-swipe-handle-bottom"
+        highlighted: Lipstick.compositor.launcherLayer.pinned
+        visible: Lipstick.compositor.multitaskingHome
+    }
+
+    Loader {
+        active: handle.doubleHandle
+        sourceComponent: Component {
+            Icon {
+                parent: launcherPager.contentItem
+                y: launcherPager.originY
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: -handle.anchors.horizontalCenterOffset
+                source: "image://theme/graphic-edge-swipe-handle-bottom"
+                highlighted: Lipstick.compositor.launcherLayer.pinned
+                visible: Lipstick.compositor.multitaskingHome
+            }
+        }
+    }
+
+    MouseArea {
+        objectName: "Launcher"
+        y: launcherPager.originY + launcher.statusBarHeight
+        parent: launcherPager.contentItem
+        width: launcherPager.width
+        height: launcherPager.height * launcherPager.model.count
+
+        property int pressX
+        property int pressY
+        onPressed: {
+            pressX = mouse.x
+            pressY = mouse.y
+        }
+
+        onPressAndHold: {
+            if (Lipstick.compositor.launcherLayer.active && !launcher.launcherEditMode
+                    && Math.abs(mouse.x - pressX) < Theme.startDragDistance
+                    && Math.abs(mouse.y - pressY) < Theme.startDragDistance) {
+                launcher.setEditMode(true)
+                findClosestDelegate(mouse.x, mouse.y).animateScaleUp()
+            }
+        }
+        onClicked: {
+            if (launcher.launcherEditMode)
+                launcher.setEditMode(false)
+            Lipstick.compositor.launcherLayer.pinned = false
+        }
+
+        LauncherGrid {
+            id: launcher
+
+            property Item remorse
+            property bool removeApplicationEnabled
+
+            launcherEditMode: removeApplicationEnabled && !openedChildFolder
+
+            gridManager.onScroll: launcherPager.scroll(up)
+            gridManager.onStopScrolling: launcherPager.stopScrolling()
+
+            model: LauncherFolderModel {
+                property bool completed
+
+                Component.onCompleted: {
+                    Lipstick.compositor.launcherModel = allItems
+                    completed = true
+                }
+
+                iconDirectories: Theme.launcherIconDirectories
+                blacklistedApplications: {
+                    if (!completed)
+                        return []
+
+                    // Currently desktop-file path is good app grid item
+                    // identifier. However, this is a subject to change in future.
+                    var blacklist = AppBlacklist.list
+                    var path = "/usr/share/applications"
+                    if (!developerModeEnabled.value
+                            || !AccessControl.hasGroup(AccessControl.RealUid, "sailfish-system")) {
+                        blacklist.push(path + "/fingerterm.desktop")
+                    }
+
+                    if (!AccessControl.hasGroup(AccessControl.RealUid, "sailfish-system")) {
+                        blacklist.push(path + "/store-client.desktop")
+                    }
+
+                    if (!AccessPolicy.cameraAppEnabled) {
+                        blacklist.push(path + "/jolla-camera.desktop")
+                        blacklist.push(path + "/jolla-camera-viewfinder.desktop")
+                    }
+                    
+                    if (!AccessPolicy.browserEnabled) {
+                        blacklist.push(path + "/sailfish-browser.desktop")
+
+                        // Blacklist links after LauncherFolderModel is populated.
+                        // The model is initialized (loaded) upon component completed.
+                        // Avoid binding loop to the itemCount as blacklisting alters count.
+                        var i = 0
+                        var item = get(i)
+                        while (item) {
+                            if (item.entryType === "Link") {
+                                blacklist.push(item.filePath)
+                            }
+
+                            ++i
+                            item = get(i)
+                        }
+                    }
+
+                    return blacklist
+                }
+
+                onNotifyLaunching: {
+                    item.isLaunching = true // TODO: Some leftover?
+                    if (!item.isUpdating) {
+                        Desktop.instance.switcher.activateWindowFor(item)
+                    }
+                }
+
+                onCanceledNotifyLaunching: {
+                    var switcher = Desktop.instance && Desktop.instance.switcher
+                    if (switcher) {
+                        switcher.closeCover(item, false)
+                    }
+                }
+
+                onApplicationRemoved: {
+                    var switcher = Desktop.instance && Desktop.instance.switcher
+                    if (switcher) {
+                        switcher.closeCover(item, true)
+                    }
+                }
+            }
+
+            rootFolder: true
+            interactive: false
+            height: cellHeight * Math.ceil(count / columns) + (headerItem ? headerItem.height : 0)
+
+            Component.onCompleted: manageDummyPages()
+            onContentHeightChanged: manageDummyPages()
+            onLauncherEditModeChanged: manageDummyPages()
+
+            function manageDummyPages() {
+                if (launcherPager.height > 0) {
+                    // Create dummy pages to allow paging
+                    var pageCount = Math.ceil(contentHeight / launcherPager.height)
+                    while (launcherPager.model.count < pageCount) {
+                        launcherPager.model.append({ "name": "dummy" })
+                    }
+                    while (launcherPager.model.count > pageCount) {
+                        launcherPager.model.remove(launcherPager.model.count - 1)
+                    }
+                }
+            }
+
+
+            SilicaPrivate.VisibilityCull {
+                target: launcher.contentItem
+            }
+
+            function removeApplication(desktopFile, title) {
+                if (!remorse) {
+                    remorse = remorseComponent.createObject(launcherPager)
+                } else if (remorse.desktopFile !== "" && remorse.desktopFile !== desktopFile) {
+                    remorse.removePackageByDesktopFile()
+                    remorse.cancel()
+                }
+                remorse.desktopFile = desktopFile
+
+                //: Notification indicating that an application will be removed, %1 will be replaced by application name
+                //% "Uninstalling %1"
+                remorse.execute(qsTrId("lipstick-jolla-home-no-uninstalling").arg(title))
+            }
+
+            ConfigurationValue {
+                id: developerModeEnabled
+
+                defaultValue: false
+                key: "/sailfish/developermode/enabled"
+            }
+
+            Binding {
+                target: Lipstick.compositor.launcherLayer
+                property: "cellHeight"
+                value: launcher.cellHeight
+            }
+
+            Component {
+                id: remorseComponent
+
+                RemorsePopup {
+                    property string desktopFile
+
+                    function removePackageByDesktopFile() {
+                        if (desktopFile !== "") {
+                            installationHandler.call("removePackageByDesktopFile", desktopFile)
+                            desktopFile = ""
+                        }
+                    }
+
+                    z: 100
+                    onTriggered: removePackageByDesktopFile()
+                    onCanceled: desktopFile = ""
+
+                    DBusInterface {
+                        id: installationHandler
+
+                        service: "org.sailfishos.installationhandler"
+                        path: "/org/sailfishos/installationhandler"
+                        iface: "org.sailfishos.installationhandler"
+                    }
+                }
+            }
+        }
+    }
+}

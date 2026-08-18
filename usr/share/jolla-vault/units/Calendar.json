@@ -1,0 +1,7 @@
+{
+    "icon": "icon-launcher-calendar",
+    "name": "Calendar",
+    "script": "/usr/libexec/jolla-vault/units/vault-calendar",
+    "translation": "vault-ap-calendar"
+}
+

@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-glacial",
+    "displayName"               : "ambience-glacial",
+    "wallpaper"                 : "ambience_glacial.jpg",
+    "highlightColor"            : "#FF005999",
+    "secondaryHighlightColor"   : "#B0005999",
+    "primaryColor"              : "#FF000000",
+    "secondaryColor"            : "#FF454545",
+    "favorite"                  : false,
+    "colorScheme"               : "darkonlight",
+    "timestamp"                 : "2018-10-24T16:00:00",
+    "version"                   : 3
+}

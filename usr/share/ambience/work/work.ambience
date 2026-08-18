@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-work",
+    "displayName"               : "ambience-work",
+    "wallpaper"                 : "ambience_work.jpg",
+    "highlightColor"            : "#ff80e1fe",
+    "secondaryHighlightColor"   : "#ff64bbc7",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T13:00:00",
+    "version"                   : 2
+}

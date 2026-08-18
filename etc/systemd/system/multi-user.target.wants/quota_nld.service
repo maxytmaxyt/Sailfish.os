@@ -1,0 +1,10 @@
+[Unit]
+Description=Disk quota netlink message daemon
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/quota_nld --foreground --no-console --print-below
+
+[Install]
+WantedBy=multi-user.target

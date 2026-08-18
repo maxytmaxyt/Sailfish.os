@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/lockscreen",
+            "title": "Lock screen",
+            "translation_id": "settings_display-he-lockscreen",
+            "type": "page",
+            "icon": "image://theme/icon-m-screenlock",
+            "order": 350,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/lockscreen/lockscreen.qml"
+            }
+        }
+    ]
+}

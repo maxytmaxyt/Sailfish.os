@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/events",
+            "title": "Events view",
+            "translation_id": "settings_system-events",
+            "type": "page",
+            "icon": "image://theme/icon-m-events",
+            "order": 310,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/events/events.qml"
+            }
+        }
+    ]
+}

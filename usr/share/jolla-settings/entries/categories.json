@@ -1,0 +1,32 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel",
+            "title": "Look and feel",
+            "translation_id": "settings_system-look_and_feel_category",
+            "type": "section"
+        },
+        {
+            "path": "system_settings/security",
+            "title": "Security",
+            "translation_id": "settings_system-security_category",
+            "type": "section",
+            "order": 250
+        },
+        {
+            "path": "system_settings/system",
+            "title": "System",
+            "translation_id": "settings_system-system_category",
+            "type": "section",
+            "order": 300
+        },
+        {
+            "path": "system_settings/info",
+            "title": "Info",
+            "translation_id": "settings_system-info",
+            "type": "section",
+            "order": 600
+        }
+    ]
+}

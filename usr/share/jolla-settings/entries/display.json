@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/display",
+            "title": "Display",
+            "translation_id": "settings_system-display",
+            "type": "page",
+            "icon": "image://theme/icon-m-display",
+            "order": 200,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/display/display.qml"
+            }
+        }
+    ]
+}

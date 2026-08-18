@@ -1,0 +1,30 @@
+{
+    "translation_catalog": "settings-network",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/tethering",
+            "type": "page",
+            "title": "Share internet",
+            "translation_id": "settings_networking-tethering",
+            "icon": "image://theme/icon-m-wlan-hotspot",
+            "order": 300,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/tethering/mainpage.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/tethering/wlan_hotspot_switch",
+            "type": "custom",
+            "translation_id": "settings_networking-tethering",
+            "icon": "image://theme/icon-m-wlan-hotspot",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/tethering/TetheringEnableSwitch.qml",
+                "type": "grid",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/tethering"
+            }
+        }
+
+    ]
+}

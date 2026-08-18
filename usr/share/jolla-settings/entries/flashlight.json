@@ -1,0 +1,15 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/topmenu/flashlight/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_system-flashlight",
+            "icon": "image://theme/icon-m-flashlight",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/flashlight/EnableSwitch.qml",
+                "type": "grid"
+            }
+        }
+    ]
+}

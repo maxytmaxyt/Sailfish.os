@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-encryption",
+    "required_group": "sailfish-system",
+    "entries": [
+    {
+        "path": "system_settings/security/encryption",
+        "title": "Encryption",
+        "translation_id": "settings_encryption-he-encryption",
+        "type": "page",
+        "icon": "image://theme/icon-m-screenlock",
+        "order": 310,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/encryption/encryption.qml"
+         }
+    }
+    ]
+}

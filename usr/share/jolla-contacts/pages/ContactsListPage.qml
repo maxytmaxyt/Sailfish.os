@@ -1,0 +1,178 @@
+/*
+ * Copyright (c) 2013 - 2021 Jolla Ltd.
+ * Copyright (c) 2021 Open Mobile Platform LLC.
+ *
+ * License: Proprietary
+*/
+
+import QtQuick 2.6
+import Sailfish.Silica 1.0
+import Sailfish.Contacts 1.0
+import org.nemomobile.contacts 1.0
+import "common/PageCache.js" as PageCache
+
+Page {
+    id: root
+
+    property Person selectedContact
+    property PeopleModel favoritesModel: contactBrowser.favoriteContactsModel
+    property PeopleModel allContactsModel: contactBrowser.allContactsModel
+
+    ContactBrowser {
+        id: contactBrowser
+
+        searchActive: true
+        searchableContactProperty: PeopleModel.AccountUriSearchable
+                                   | PeopleModel.EmailAddressSearchable
+                                   | PeopleModel.PhoneNumberSearchable
+                                   | PeopleModel.OrganizationSearchable
+
+        pageHeader: PageHeader {
+            // Also translated in strings.qml:
+            //: Application name in desktop file
+            //% "People"
+            title: qsTrId("contacts-ap-name")
+            page: root
+        }
+
+        //: Displayed when there are no contacts
+        //% "Add people"
+        placeholderText: qsTrId("contacts-la-add_people")
+
+        onContactClicked: {
+            openContactCard(contact, PageStackAction.Animated)
+        }
+
+        onContactPressAndHold: {
+            contactBrowser.openContextMenu(contact.id, contactContextMenuComponent, {"person": contact})
+        }
+
+        Component {
+            id: contactContextMenuComponent
+
+            ContactBrowserMenu {
+                peopleModel: root.allContactsModel
+
+                onEditContact: {
+                    ContactsUtil.editContact(person, root.allContactsModel, pageStack)
+                }
+
+                onChangeFavoriteStatus: {
+                    favoriteModifier.setFavoriteStatus(person, favorite)
+                }
+            }
+        }
+
+        ContactFavoriteModifier {
+            id: favoriteModifier
+
+            peopleModel: root.allContactsModel
+        }
+
+        PullDownMenu {
+            MenuItem {
+                //: Allows the user to select multiple contacts (for deletion or sharing)
+                //% "Select contacts"
+                text: qsTrId("contacts-me-select_contacts")
+                visible: allContactsModel.count > 0
+                onClicked: openContactMultiSelectPage()
+            }
+
+            MenuItem {
+                //: Show contact search view
+                //% "Search"
+                text: qsTrId("contacts-me-search")
+                enabled: allContactsModel.count > 0
+                visible: contactBrowser.canHideSearchField
+
+                onClicked: contactBrowser.forceSearchFocus()
+            }
+
+            MenuItem {
+                //: Initiates adding a new contact
+                //% "Add contact"
+                text: qsTrId("contacts-me-add_contact")
+                onClicked: openNewContactEditor()
+            }
+        }
+    }
+
+    ContactShareAction {
+        id: shareAction
+    }
+
+    /* for the active cover, cache the models in the page cache */
+    Component.onCompleted: {
+        ContactsUtil.init()
+        PageCache.favoritesModel = root.favoritesModel
+        PageCache.allContactsModel = root.allContactsModel
+    }
+
+    function openContactCard(contact, operationType) {
+        if (contact == null || contact == undefined) {
+            return null
+        }
+        pageStack.animatorPush("Sailfish.Contacts.ContactCardPage",
+                               {"contact": contact},
+                               operationType)
+    }
+
+    function openContactEditor(contact) {
+        if (contact == null || contact == undefined) {
+            return null
+        }
+        ContactsUtil.editContact(contact,
+                                 root.allContactsModel,
+                                 pageStack)
+    }
+
+
+    function openContactMultiSelectPage() {
+        var obj = pageStack.animatorPush("Sailfish.Contacts.ContactMultiSelectPage")
+        obj.pageCompleted.connect(function(page) {
+            page.shareClicked.connect(multiSelectShareClicked)
+            page.deleteClicked.connect(multiSelectDeleteClicked)
+        })
+    }
+
+    function multiSelectDeleteClicked(contactIds) {
+        pageStack.animatorReplace("RemoveContactsPage.qml", { "contactsToRemove": contactIds })
+    }
+
+    function multiSelectShareClicked(content) {
+        shareAction.resources = [content]
+        shareAction.trigger()
+    }
+
+    function openNewContactEditor(attributes, operationType) {
+        ContactsUtil.editNewContact(ContactCreator.createContact(attributes),
+                                    root.allContactsModel,
+                                    pageStack)
+    }
+
+    function openImportWizard(properties) {
+        pageStack.animatorPush("ContactImportWizardPage.qml", properties)
+    }
+
+    function openImportPage(properties) {
+        var obj = pageStack.animatorPush("Sailfish.Contacts.ContactImportPage", properties)
+        obj.pageCompleted.connect(function(page) {
+            page.contactOpenRequested.connect(function(contactId) {
+                if (contactId != undefined) {
+                    pageStack.animatorReplace("Sailfish.Contacts.ContactCardPage",
+                                              {"contact": root.allContactsModel.personById(contactId)})
+                } else {
+                    pageStack.pop()
+                }
+            })
+        })
+    }
+
+    function openRemoveAllPage() {
+        pageStack.animatorPush("RemoveContactsPage.qml", { "removeAllContacts": true })
+    }
+
+    function openSearch() {
+        contactBrowser.forceSearchFocus()
+    }
+}

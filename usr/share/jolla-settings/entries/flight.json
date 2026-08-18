@@ -1,0 +1,29 @@
+{
+    "translation_catalog": "settings-networking",
+    "entries": [
+        {
+            "path": "system_settings/connectivity/flight",
+            "type": "page",
+            "title": "Flight mode",
+            "translation_id": "settings_networking-flight",
+            "order": 400,
+            "icon": "image://theme/icon-m-airplane-mode",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/flight/flightpage.qml",
+                "allow_favorite": false
+            }
+        },
+        {
+            "path": "system_settings/connectivity/flight/enable_switch",
+            "type": "custom",
+            "translation_id": "settings_networking-flight",
+            "icon": "image://theme/icon-m-airplane-mode",
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/flight/EnableSwitch.qml",
+                "type": "grid",
+                "privileged": "true",
+                "settings_path": "system_settings/connectivity/flight"
+            }
+        }
+    ]
+}

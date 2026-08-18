@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "settings-system",
+    "disabled_group": "sailfish-guest",
+    "entries": [
+    {
+        "path": "system_settings/security/certificates",
+        "title": "Certificates",
+        "translation_id": "settings_system-certificates",
+        "type": "page",
+        "icon": "image://theme/icon-m-link",
+        "order": 470,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/certificates/certificates.qml"
+         }
+    }
+    ]
+}

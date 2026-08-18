@@ -1,0 +1,12 @@
+{
+    "translationCatalog"        : "ambience-flow",
+    "displayName"               : "ambience-flow",
+    "wallpaper"                 : "ambience_flow.jpg",
+    "highlightColor"            : "#FF88B0FE",
+    "secondaryHighlightColor"   : "#B088B0FE",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#B0FFFFFF",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T12:00:00",
+    "version"                   : 2
+}

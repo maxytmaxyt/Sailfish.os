@@ -1,0 +1,17 @@
+{
+    "translation_catalog": "gallery-ambience",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/ambiences",
+            "title": "Ambiences",
+            "translation_id": "jolla-gallery-ambience-he-ambiences",
+            "type": "page",
+            "icon": "image://theme/icon-m-ambience",
+            "order": 10,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/jolla-gallery-ambience/ambience.qml",
+                "allow_favorite": false
+            }
+        }
+    ]
+}

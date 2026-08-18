@@ -1,0 +1,96 @@
+Sailfish OS Terms of Use
+
+Last updated January 8, 2026
+
+Please review this agreement (the "Agreement") carefully before using the Software. Because you need to accept these terms before using the Software, we recommend you take your time reading through them to make sure you are comfortable with them. You agree to these terms by downloading or using Sailfish OS, any included additional components and all documentation ("Software") or by clicking on the "Accept" button next to this Agreement when downloading, installing and/or using the Software.
+
+
+Note that our Software is based on the great efforts and innovations of the open source community. The core components of our software are all available as open source via various projects in which we actively participate ("Free Software"). We encourage you to also join those projects and participate. Although our Software is subject to this Agreement, Free Software is available under its own terms, subject to which you are free to use it as you wish. For more information about these open source components, see http://www.sailfishos.org.
+
+In addition to Free Software, please note that the Software can include other third party software under separate licenses (which, together with Free Software are referred to as "Third Party Components"). These Third Party Components can be subject to different license terms which you must accept in order to be able to use them.
+
+Scope
+
+This is an Agreement between you and Jolla Mobile Ltd, including its affiliates and suppliers (collectively referred to as "us" or "we"). This Agreement sets out the terms and conditions under which you are allowed to use the Software. Note that the Software is only licensed to you, it is not sold. This Agreement covers the current version of the Software, as well as any further updates or upgrades made available by us at our discretion unless otherwise stated in any additional terms included with the update or upgrade.
+
+This Agreement does not limit any rights granted to you by licenses for Third Party Components.
+
+Eligibility
+
+You must have the legal right to enter into agreements of this nature in order to use the Software.
+
+License
+
+In consideration of your compliance with this Agreement we grant you the right to access and use our Software for your own personal non-commercial use. If you received our Software integrated into a product, your license is limited to use of our Software on the product in question. This does not mean that you cannot receive our Software separately from a product. For licensing our Software for wider use, please see http://www.sailfishos.org for further details. You agree not to use the Software for any other purposes without a separate agreement with us.
+
+License restrictions. You are expressly prohibited from doing any of the following acts:
+
+Although we encourage you to develop our Software to make it better, we cannot allow such development, modifying or any harmful interaction with the version of our Software distributed integrated in a product. This is because the integration version includes proprietary components from third parties who do not allow it. In case of Free Software, have fun but do not do anything harmful and remember to respect the applicable free license terms. If you want to receive a version of our Software that can be more freely hacked, see http://www.sailfishos.org for further details.
+
+Adding, uploading and/or displaying: (i) any material protected by copyright or other intellectual property rights without the prior approval of the respective rights holder, or (ii) any illegal or otherwise inappropriate or obscene material.
+
+Using our Software for any illegal, fraudulent or unauthorized purpose.
+
+Copying any elements of our Software, including code, graphics, sounds, our name, trademark, logo or other proprietary information, without our prior written consent.
+
+Circumventing or breaching any security or any authentication measures put in place by us.
+
+Transmitting any worms or viruses, or any code of a destructive nature.
+
+Providing us false or misleading information.
+
+Collecting from any third parties personal data or personally identifiable information in violation of any data protection and/or privacy laws.
+
+Using our Software in violation of any export control law or regulation.
+
+Encouraging or soliciting any third party to do any acts of the above acts or any other act that infringes this Agreement.
+
+If we, in our reasonable discretion, consider that you are violating the terms of the license or this Agreement, we reserve the right to, in addition to any other remedies available, to suspend your access to our Software or related services ("Services").
+
+Ownership
+
+'Jolla' and 'Sailfish' are trademarks or registered trademarks of Jolla Mobile Ltd. Our product names are either our trademarks or registered trademarks. Our Software is protected by copyright, trademark, trade secrets and other intellectual property rights. This Agreement does not grant you any rights in our Software or our intellectual property rights as such, except for your right to use the Software in accordance with this Agreement.
+
+Some of the functionality in our Software allows you to add or submit your own materials into our Software or Services offered by us. We claim no intellectual property rights over such material. Your materials remain yours. However, unless and until otherwise expressly informed by you, you grant us a non-exclusive, royalty-free, worldwide and perpetual right to use, modify, distribute, and prepare derivative works of, such material solely in our Software and Services for the purposes of enabling you to use the Software and Services in their intended manner. This right must be perpetual, as we do not have the technical capability to manually remove all material you might have provided.
+
+Privacy
+
+Your privacy is of utmost importance to us, as we believe that by protecting your privacy, we also make our Software and Services better. In order to see how we collect and process personal data, please see our Privacy Policy, available at url http://www.jolla.com/legal. Your acceptance of the Privacy Policy is required before you can use any parts of our Software that require you to submit personal data to us.
+
+Note that we can also collect anonymous diagnostics and usage information about your use of our Software and the product. Any collection of such diagnostic data will only be made with your express consent, which we will request prior to any such collection. The collected data can be used for the purposes of providing support services, further developing the Software, or ensuring the compliance with any applicable license terms.
+
+Software and Third Party Materials
+
+Our Software may also include third party content or materials (which, together with Third Party Components are referred to as "Third Party Content"). We cannot accept any liability for errors, omissions or other deficiencies in such Third Party Content. In some cases Third Party Content can be subject to its own terms of use, which you need to comply with in order to use such Third Party Content.
+
+Termination
+
+Your license to use the Software will terminate automatically if you fail to comply with this Agreement. After termination, you must delete all copies of the Software that you have installed on your product.
+
+Disclaimer of warranties
+
+We provide our Software on an "as is" and "as available" basis. WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY (INCLUDING BUT NOT LIMITED TO FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT) REGARDING THE USE OR THE RESULTS OF THE USE OF OUR SOFTWARE OR ANY THIRD PARTY CONTENT, TO THE GREATEST EXTENT PERMITTED BY LAW.
+
+Limitation of liability
+
+We are not liable for any indirect losses suffered by you as a result of using our Software. Such indirect losses include, but are not limited to, loss of profit, loss of income, loss of business, loss of revenue or loss of goodwill, any loss or corruption of or damage to data, or any loss or damage which was not a reasonably foreseeable result of either our breach of contract or our breach of our legal duty of care. Loss or damage is "reasonably foreseeable" if, at the time that we and you entered into a contract, such loss was either contemplated by us and you or you notified us that the loss may occur if we breached the contract or our legal duty of care. Our total aggregate liability for direct losses is limited to the higher of the following: (i) the fees actually paid by you for the Software (or in case of the Software being integrated in a product, for the product), or (ii) fifty (50) euros.
+
+You agree to indemnify and hold us (and our directors, employees or partners) harmless from any claim or demand, including reasonable attorneys' fees, made by any third party due to or arising out of your breach of this Agreement or the documents it incorporates by reference, or your violation of any law or the rights of a third party.
+
+Export control
+
+Parts of the Software can be subject to export control laws in your country of residence or other countries. You agree to comply with all such export control laws, including by refraining from exporting such parts of the Software to any country prohibited by the applicable export control laws.
+
+Special terms
+
+Jolla Account and Services. The Software enables to register a Jolla Account and access various Services. Use of the Jolla Account and any Services provided by Jolla is subject to the Jolla Terms of Service, available at url https://jolla.com/terms-of-service/, as well as any specific terms related to the service in question.
+
+Applicable law and jurisdiction
+
+In the event a dispute arises between you and us, please contact Support, available at url https://jolla.com/support. If we cannot find an amicable solution, all disputes shall be resolved in the first instance exclusively by the district court in Helsinki, Finland. This Agreement shall be subject to the laws of Finland, excluding its choice of law provisions.
+
+General terms
+
+Your rights and obligations under this Agreement (including the license) are personal to you, and are thus not assignable.
+
+Because we are constantly developing our Software, we need to reserve the right, at any time and our sole discretion, to: (i) change this Agreement, (ii) launch, change or close down Software. When we do so, we will use our reasonable efforts to notify you of what we have done. This notification can happen either via our website, via the Software, or via an email notice sent to your email address you gave us at registration.

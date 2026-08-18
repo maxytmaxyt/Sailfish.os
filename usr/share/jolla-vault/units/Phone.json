@@ -1,0 +1,6 @@
+{
+    "icon": "icon-launcher-phone",
+    "name": "Phone",
+    "script": "/usr/libexec/jolla-vault/units/vault-calls",
+    "translation": "vault-ap-phone"
+}

@@ -1,0 +1,13 @@
+{
+    "entries": [
+    {
+        "path": "applications/jolla-email.desktop",
+        "title": "Mail",
+        "type": "application",
+        "icon": "image://theme/icon-m-mail",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/jolla-email/email.qml"
+        }
+    }
+    ]
+}

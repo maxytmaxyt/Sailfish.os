@@ -1,0 +1,14 @@
+{
+    "required_group": "sailfish-messages",
+    "entries": [
+    {
+        "path": "applications/jolla-messages.desktop",
+        "title": "Messages",
+        "type": "application",
+        "icon": "image://theme/icon-m-message",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/jolla-messages/messages.qml"
+        }
+    }
+    ]
+}

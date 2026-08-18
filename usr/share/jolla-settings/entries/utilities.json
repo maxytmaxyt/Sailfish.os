@@ -1,0 +1,23 @@
+{
+    "translation_catalog": "settings-sailfish_utilities",
+    "entries": [
+        {
+            "path": "system_settings/info",
+            "title": "Info",
+            "translation_id": "settings_system-info",
+            "type": "section",
+            "order": 600
+        },
+        {
+            "path": "system_settings/info/utilities",
+            "title": "Utilities",
+            "translation_id": "settings-sailfish_utilities",
+            "type": "page",
+            "icon": "image://theme/icon-m-health",
+            "order": 200,
+            "params": {
+                "source": "/usr/share/sailfish-utilities/MainPage.qml"
+            }
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "translationCatalog"        : "ambience-sailing",
+    "displayName"               : "ambience-sailing",
+    "wallpaper"                 : "ambience_sailing.jpg",
+    "highlightColor"            : "#fffe7f99",
+    "secondaryHighlightColor"   : "#ffcb667a",
+    "primaryColor"              : "#FFFFFFFF",
+    "secondaryColor"            : "#FFBABABA",
+    "favorite"                  : false,
+    "timestamp"                 : "2015-01-01T08:00:00",
+    "version"                   : 2
+}
+

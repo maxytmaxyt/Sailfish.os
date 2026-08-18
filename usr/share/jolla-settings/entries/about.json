@@ -1,0 +1,18 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+    {
+        "path": "system_settings/info/about_device",
+        "title": "About device",
+        "translation_id": "settings_system-about_device",
+        "title_short": "About",
+        "translation_id_short": "settings_system-about_device_short",
+        "type": "page",
+        "icon": "image://theme/icon-m-about",
+        "order": 100,
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/about/about.qml"
+        }
+    }
+    ]
+}

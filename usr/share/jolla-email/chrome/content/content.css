@@ -1,0 +1,7 @@
+body {
+  font-family: "Sail Sans Pro Light", sans-serif !important;
+  margin: 12px !important;
+  /* Add Theme.itemSizeMedium (100px) to the bottom margin to avoid the toolbar
+  covering the text at the base of the email */
+  margin-bottom: 112px !important;
+}

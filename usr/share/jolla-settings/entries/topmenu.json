@@ -1,0 +1,16 @@
+{
+    "translation_catalog": "settings-system",
+    "entries": [
+        {
+            "path": "system_settings/look_and_feel/topmenu",
+            "title": "Top menu",
+            "translation_id": "settings_system-topmenu",
+            "type": "page",
+            "icon": "image://theme/icon-m-top-menu",
+            "order": 320,
+            "params": {
+                "source": "/usr/share/jolla-settings/pages/topmenu/topmenu.qml"
+            }
+        }
+    ]
+}

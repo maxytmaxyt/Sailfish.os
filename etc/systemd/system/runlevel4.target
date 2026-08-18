@@ -1,0 +1,14 @@
+# Copyright (C) 2013 Jolla Oy
+# Contact: Pekka Lundstrom  <pekka.lundstrom@jollamobile.com>
+#
+# Target for actdead mode (charging only)
+
+[Unit]
+Description=Actdead
+Requires=actdead-pre.target
+After=actdead-pre.target
+Conflicts=rescue.target graphical.target factory-test.target
+AllowIsolate=yes
+
+[Install]
+Alias=default.target
