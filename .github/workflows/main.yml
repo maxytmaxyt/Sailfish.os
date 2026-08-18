@@ -28,15 +28,14 @@ jobs:
 
       - name: Build RPM via Sailfish Platform SDK
         run: |
-          sudo chown -R "$(id -u):$(id -g)" "$PWD"
           docker run --rm \
             --privileged \
-            --user root \
-            -e HOME=/root \
+            --user "$(id -u):$(id -g)" \
+            -e HOME=/tmp \
             -v "${PWD}:/workspace" \
             -w /workspace \
             coderus/sailfishos-platform-sdk:latest \
-            bash -lc "mkdir -p /workspace/.mb2 && chown -R root:root /workspace/.mb2 && mb2 -t SailfishOS-latest-armv7hl build"
+            bash -lc "mb2 targets || true; mb2 -t SailfishOS-armv7hl build"
 
       - name: Collect RPMs and build OTA repo
         run: |
