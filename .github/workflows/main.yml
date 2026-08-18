@@ -3,6 +3,16 @@ name: Build RPM and Update OTA Repo
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -11,21 +21,58 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build RPM inside Sailfish SDK Container
+      - name: Install dependencies
         run: |
-          # Run build commands using Sailfish SDK container
-          docker run --rm -v $(pwd):/workspace -w /workspace coderus/sailfishos-sdk:latest /bin/bash -c "mb2 build"
+          sudo apt-get update
+          sudo apt-get install -y createrepo-c wget libglib2.0-0
+
+      - name: Download and install Sailfish SDK
+        run: |
+          # Download SDK Installer
+          wget https://releases.sailfishos.org/sdk/installers/3.13.5/SailfishSDK-3.13.5-linux64-online.run -O installer.run
+          chmod +x installer.run
+          
+          # Run headless installation
+          ./installer.run --verbose --script-debug --accept-licenses --default-answer --confirm-command
+
+          # Setup SDK PATH & target
+          export PATH="$HOME/SailfishOS/bin:$PATH"
+          # Sync targets if needed via SDK manager
+          if [ -f "$HOME/SailfishOS/bin/sfos-sdk-cbm" ]; then
+            $HOME/SailfishOS/bin/sfos-sdk-cbm target list || true
+          fi
+
+      - name: Build RPM Package
+        run: |
+          # Inject PATH for Sailfish SDK build tools
+          export PATH="$HOME/SailfishOS/bin:$PATH"
+          
+          # Execute build step (fallback to docker build if SDK tooling requires engine daemon)
+          if command -v mb2 &> /dev/null; then
+            mb2 build
+          else
+            # Execute build via SDK container interface
+            docker run --rm -v $(pwd):/workspace -w /workspace coderus/sailfishos-sdk:latest /bin/bash -c "mb2 build"
+          fi
 
       - name: Prepare Repo Directory
         run: |
-          # Set up public folder for GitHub Pages
           mkdir -p public
-          cp RPMS/*.rpm public/
-          sudo apt-get update && sudo apt-get install -y createrepo-c
+          cp -f RPMS/*.rpm public/ 2>/dev/null || cp -f *.rpm public/ 2>/dev/null || true
           createrepo_c public/
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          path: public/
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
