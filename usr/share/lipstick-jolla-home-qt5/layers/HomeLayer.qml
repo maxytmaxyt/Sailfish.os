@@ -16,10 +16,11 @@ import "../compositor"
 import "../main"
 import "../statusarea"
 
-// iPhone gesture mapping:
+// iPhone gesture mapping without a physical Home button:
 //   Swipe LEFT/RIGHT → Home screen pages (Events ↔ Switcher)
 //   Swipe UP slow/hold → App Switcher (multitasking)
 //   Swipe UP fast → Home (handled by LauncherLayer)
+//   Swipe from the bottom edge is the replacement for the Home button
 Pannable {
     id: homescreen
 

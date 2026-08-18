@@ -43,9 +43,9 @@ Page {
             TextSwitch {
                 automaticCheck: false
                 checked: desktopSettings.left_peek_to_events
-                //% "Quick Events access"
+                //% "iPhone-style Events access"
                 text: qsTrId("settings_display-la-left_peek_at_events")
-                //% "A left edge swipe always goes to Events instead of Home"
+                //% "Swipe from the left edge to Events; no Home button required."
                 description: qsTrId("settings_shortcuts-la-left_peek_at_events_hint")
                 onClicked: desktopSettings.left_peek_to_events = !desktopSettings.left_peek_to_events
             }
