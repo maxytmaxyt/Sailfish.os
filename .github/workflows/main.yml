@@ -21,35 +21,41 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install dependencies & X11 libraries
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             createrepo-c \
             wget \
+            xvfb \
             libglib2.0-0 \
+            libxcb1 \
             libxcb-icccm4 \
             libxcb-image0 \
             libxcb-keysyms1 \
             libxcb-render-util0 \
+            libxcb-render0 \
+            libxcb-shape0 \
+            libxcb-shm0 \
+            libxcb-xfixes0 \
             libxcb-xinerama0 \
-            libxkbcommon-x11-0
+            libxkbcommon0 \
+            libxkbcommon-x11-0 \
+            libfontconfig1 \
+            libdbus-1-3
 
       - name: Download and install Sailfish SDK
         run: |
           wget https://releases.sailfishos.org/sdk/installers/3.13.5/SailfishSDK-3.13.5-linux64-online.run -O installer.run
           chmod +x installer.run
-          ./installer.run --verbose --script-debug --accept-licenses --default-answer --confirm-command
+          xvfb-run ./installer.run --verbose --script-debug --accept-licenses --default-answer --confirm-command
+
       - name: Build RPM Package
         run: |
-          # Inject PATH for Sailfish SDK build tools
           export PATH="$HOME/SailfishOS/bin:$PATH"
-          
-          # Execute build step (fallback to docker build if SDK tooling requires engine daemon)
           if command -v mb2 &> /dev/null; then
             mb2 build
           else
-            # Execute build via SDK container interface
             docker run --rm -v $(pwd):/workspace -w /workspace coderus/sailfishos-sdk:latest /bin/bash -c "mb2 build"
           fi
 
