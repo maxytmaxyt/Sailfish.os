@@ -5,12 +5,12 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 concurrency:
   group: ota-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  SFOS_RELEASE: 5.0.0.43   # anpassen: https://hub.docker.com/r/coderus/sailfishos-platform-sdk/tags
 
 jobs:
   build:
@@ -21,30 +21,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install host dependencies
+      - name: Prepare RPMS directory
+        run: mkdir -p RPMS
+
+      - name: Build armv7hl
+        uses: coderus/github-sfos-build@sfos5   # sfos5 für >= 5.0.0; master für 4.1–4.x
+        with:
+          release: ${{ env.SFOS_RELEASE }}
+          arch: armv7hl
+
+      - name: Install createrepo-c
         run: |
           sudo apt-get update
           sudo apt-get install -y createrepo-c
 
-      - name: Build RPM via Sailfish Platform SDK
-        run: |
-          docker run --rm \
-            --privileged \
-            --user "$(id -u):$(id -g)" \
-            -e HOME=/tmp \
-            -v "${PWD}:/workspace" \
-            -w /workspace \
-            coderus/sailfishos-platform-sdk:latest \
-            bash -lc "mb2 targets || true; mb2 -t SailfishOS-armv7hl build"
-
-      - name: Collect RPMs and build OTA repo
+      - name: Build OTA repo
         run: |
           mkdir -p public
-          find . -name "*.rpm" \
-            -not -path "./public/*" \
-            -exec cp -f {} public/ \;
+          cp -f RPMS/*.rpm public/
           if ! ls public/*.rpm 1>/dev/null 2>&1; then
-            echo "::error::No RPM files found after build"
+            echo "::error::No RPM files found in RPMS/"
             exit 1
           fi
           createrepo_c public/
