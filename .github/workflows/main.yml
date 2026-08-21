@@ -10,7 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SFOS_RELEASE: 5.0.0.43   # anpassen: https://docker.com
+  # Gültige Versionen siehe: https://sailfishos.org
+  SFOS_RELEASE: 5.0.0.43   
 
 jobs:
   build:
@@ -24,10 +25,8 @@ jobs:
       - name: Syntax Check QML Files
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace coderus/sailfishos-platform-sdk:${{ env.SFOS_RELEASE }} /bin/bash -c "
-            if lsof -t /dev/null >/dev/null 2>&1; then :; fi
             echo 'Suche nach QML-Prüfwerkzeugen...'
             
-            # Qt5-Binary-Pfade im SDK lokalisieren
             QML_LINTER=\"\"
             for path in /usr/lib64/qt5/bin/qmllint /usr/lib/qt5/bin/qmllint /usr/bin/qmllint; do
               if [ -x \"\$path\" ]; then
@@ -36,8 +35,8 @@ jobs:
               fi
             done
 
-            if [ -z \"\$QML_LINTER\" ]; then
-              echo \"::error::qmllint wurde im SDK-Container nicht gefunden! Überprüfe die SDK-Struktur.\"
+            if [ -z \"\$AM_LINTER\" ] && [ -z \"\$QML_LINTER\" ]; then
+              echo \"::error::qmllint wurde im SDK-Container nicht gefunden!\"
               exit 1
             fi
 
@@ -45,22 +44,19 @@ jobs:
             echo 'Starte QML Syntax-Prüfung...'
             
             errors=0
-            failed_files=\"\"
             
             while IFS= read -r file; do
               echo \"Prüfe: \$file\"
-              # Führe die Validierung mit dem absoluten Pfad aus
-              if ! \"\$QML_LINTER\" \"\$file\" >/dev/null 2>&1; then
+              # Fehler-Output nicht unterdrücken, damit man den Grund im Log sieht
+              if ! \"\$QML_LINTER\" \"\$file\"; then
                 echo \"::error file=\$file::Syntaxfehler in \$file\"
-                failed_files=\"\$failed_files\n - \$file\"
                 errors=\$((errors + 1))
               fi
-            done < <(find . -name '*.qml')
+            done < <(find . -name '*.qml' -not -path '*/.*')
             
             if [ \$errors -gt 0 ]; then
-              echo -e \"\n::: FEHLERZUSAMMENFASSUNG :::\"
-              echo -e \"Folgende \$errors Datei(en) enthalten Syntaxfehler:\$failed_files\n\"
-              echo \"::error::Build abgebrochen wegen QML-Syntaxfehlern.\"
+              echo \"\"
+              echo \"::error::Build abgebrochen wegen \$errors QML-Syntaxfehler(n).\"
               exit 1
             fi
             echo 'Alle QML-Dateien sind syntaktisch korrekt!'
@@ -70,7 +66,7 @@ jobs:
         run: mkdir -p RPMS
 
       - name: Build armv7hl
-        uses: coderus/github-sfos-build@sfos5   # sfos5 für >= 5.0.0; master für 4.1–4.x
+        uses: coderus/github-sfos-build@sfos5
         with:
           release: ${{ env.SFOS_RELEASE }}
           arch: armv7hl
@@ -83,11 +79,12 @@ jobs:
       - name: Build OTA repo
         run: |
           mkdir -p public
-          cp -f RPMS/*.rpm public/
-          if ! ls public/*.rpm 1>/dev/null 2>&1; then
-            echo "::error::No RPM files found in RPMS/"
+          # Überprüfung, ob überhaupt RPMs gebaut wurden, bevor kopiert wird
+          if ! ls RPMS/*.rpm 1>/dev/null 2>&1; then
+            echo "::error::Es wurden keine RPM-Dateien in RPMS/ gefunden!"
             exit 1
           fi
+          cp -f RPMS/*.rpm public/
           createrepo_c public/
 
       - name: Upload Pages artifact
