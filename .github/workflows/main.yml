@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SFOS_RELEASE: 5.0.0.43   # anpassen: https://hub.docker.com/r/coderus/sailfishos-platform-sdk/tags
+  SFOS_RELEASE: 5.0.0.43   # anpassen: https://docker.com
 
 jobs:
   build:
@@ -20,6 +20,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Syntax Check QML Files
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace coderus/sailfishos-platform-sdk:${{ env.SFOS_RELEASE }} /bin/bash -c "
+            if lsof -t /dev/null >/dev/null 2>&1; then :; fi
+            echo 'Starte QML Syntax-Prüfung...'
+            errors=0
+            failed_files=\"\"
+            while IFS= read -r file; do
+              echo \"Prüfe: \$file\"
+              if ! qmllint \"\$file\"; then
+                echo \"::error file=\$file::Syntaxfehler in \$file\"
+                failed_files=\"\$failed_files\n - \$file\"
+                errors=\$((errors + 1))
+              fi
+            done < <(find . -name '*.qml')
+            if [ \$errors -gt 0 ]; then
+              echo -e \"\n::: FEHLERZUSAMMENFASSUNG :::\"
+              echo -e \"Folgende \$errors Datei(en) enthalten Syntaxfehler:\$failed_files\n\"
+              echo \"::error::Build abgebrochen wegen QML-Syntaxfehlern.\"
+              exit 1
+            fi
+            echo 'Alle QML-Dateien sind syntaktisch korrekt!'
+          "
 
       - name: Prepare RPMS directory
         run: mkdir -p RPMS
